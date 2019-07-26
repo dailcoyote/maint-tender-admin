@@ -1,0 +1,67 @@
+@import "@/styles/variables.scss";
+
+@mixin border(){
+    border: 1px solid #5d5d5d;
+}
+
+@mixin input_style($height){
+    @include input_reset();
+    @include border();
+    width: 300px;
+    height: $height;
+}
+
+.login-page{
+    @include flex_center();
+}
+
+.login{
+    margin-top: 7em;
+    @include border();
+    padding: 2em 4em;
+    @include flex_center();
+    &-form{
+        display: grid;
+        &_item{
+            margin-top: 1em;
+            @include flex_horizontal_between();
+            input{
+                @include input_style(35px);
+                padding: 0 .5em;
+            }
+            label{
+                width: 170px;
+                background-color: #F2F2F2;
+                padding: .5em;
+                margin-right: 2em;
+            }
+        }
+        button{
+            @include input_style(40px);
+            margin-top: 2em;
+            justify-self: end;
+            background-color: #00CCCC;
+            cursor: pointer;
+        }
+    }
+}
+
+@include media("phone"){
+    .login{
+        margin: 3em;
+        padding: 2em;
+        &-form{
+            &_item{
+                margin-top: 1em;
+                flex-direction: column;
+                input{
+                    margin-top: .5em;
+                }
+                label{
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

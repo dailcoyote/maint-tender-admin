@@ -1,0 +1,50 @@
+@import "@/styles/variables.scss";
+
+@mixin position_fixed(){
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.dialog{
+    @include position_fixed();    
+    @include flex_center();
+    &_background{
+        @include position_fixed();
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    &_close{
+        img{
+            cursor: pointer;
+        }
+        display: flex;
+        justify-content: flex-end;
+    }
+    &-container{
+        position: absolute;
+        z-index: 3;
+        max-width: 1000px;
+        background-color: #fff;
+        max-height: calc(100% - 3.5rem);
+        padding: 1.5rem;
+        overflow: auto;
+        &::-webkit-scrollbar{
+            width: 3px;
+        }
+        &::-webkit-scrollbar-thumb{
+            background-color: #585858;
+            width: 3px;
+        }
+        &::-webkit-scrollbar-track{
+            background-color: #dbdbdb;
+        }
+    }
+    &-content{
+        overflow: auto;
+    }
+}
