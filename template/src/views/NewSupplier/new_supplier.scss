@@ -1,0 +1,61 @@
+@import "@/styles/variables.scss";
+
+.new_supplier{
+    &-content{
+        padding-left: 2em;
+    }
+    &-input{
+        margin-top: 1em;
+        display: flex;
+        label{
+            width: 300px;
+        }
+        input{
+            width: 300px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #9b9b9b;
+        }
+    }
+    &-file{
+        display: flex;
+        flex-direction: column;
+        label{
+            padding: .5em;
+            border-radius: 5px;
+            border: 1px solid #9b9b9b;
+        }
+        input[type=file]{
+            display: none;
+        }
+        button{
+            @include input_reset();
+            cursor: pointer;
+            width: fit-content;
+            margin-top: .5em;
+            padding: .3em;
+            border: 1px solid #9b9b9b;
+            background: #928f8f;
+        }
+    }
+    &-button{
+        @include input_reset();
+        cursor: pointer;
+        margin-top: 1.5em;
+        padding: .5em 1em;
+        border-radius: 5px;
+        border: 1px solid #9b9b9b;
+        background: #FFFF66;
+    }
+}
+
+@include media("phone"){
+    .new_supplier{
+        &-input{
+            flex-direction: column;
+            label{
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

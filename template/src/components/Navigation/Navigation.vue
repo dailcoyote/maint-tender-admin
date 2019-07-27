@@ -10,6 +10,12 @@
                     </i>
                 </div>
                 <h1>
+                    <i 
+                        v-if="allowBack"
+                        class="material-icons"
+                        @click="$router.go(-1)">
+                        arrow_back_ios
+                    </i>
                     {{name}}
                 </h1>
             </div>
@@ -58,6 +64,7 @@ import "./navigation.scss"
 export default {
     props: {
         name: String,
+        allowBack: Boolean
     },
     data(){
         return{

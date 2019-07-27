@@ -21,17 +21,24 @@
             font-size: 1.4rem;
             @include flex_vertical_center();
             h1{
+                @include flex_horizontal_center();
+                i{
+                    cursor: pointer;
+                    margin-right: .5em;
+                }
                 margin-left: 1.5em;
                 font-weight: 400;
             }
         }
         &_button{
+            cursor: pointer;
             i{
                 font-size: 2.5rem;
             }
         }
         &_actions{
            button{
+                cursor: pointer;
                 @include flex_center();
                 @include input_reset();
                 font-size: 1.1rem;
@@ -103,6 +110,7 @@
                 }
             }
             &-logout{
+                cursor: pointer;
                 position: absolute;
                 bottom: 2em;
                 color: #1b3cd1;

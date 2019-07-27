@@ -23,6 +23,14 @@ const router = new Router({
             meta: {
                 requaresAuth: true
             }
+        },
+        {
+            path: "/new_supplier",
+            name: "new_supplier",
+            component: () => import("./views/NewSupplier/NewSupplier.vue"),
+            meta: {
+                requaresAuth: true
+            }
         }
     ]
 });
