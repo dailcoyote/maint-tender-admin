@@ -1,3 +1,5 @@
+@import "@/styles/variables.scss";
+
 * {
     padding: 0;
     margin: 0;
@@ -42,7 +44,6 @@ label {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    // min-height: 100vh;
 }
 @keyframes fade-in{
     from{
@@ -50,5 +51,91 @@ label {
     }
     to{
         opacity: 1;
+    }
+}
+
+
+
+.new_form{
+    &-input{
+        margin-top: 1em;
+        display: flex;
+        label{
+            width: 300px;
+        }
+        input{
+            width: 300px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #9b9b9b;
+        }
+    }
+    &-file{
+        display: flex;
+        flex-direction: column;
+        label{
+            padding: .5em;
+            border-radius: 5px;
+            border: 1px solid #9b9b9b;
+        }
+        input[type=file]{
+            display: none;
+        }
+        button{
+            @include input_reset();
+            cursor: pointer;
+            width: fit-content;
+            margin-top: .5em;
+            padding: .3em;
+            border: 1px solid #9b9b9b;
+            background: #928f8f;
+        }
+    }
+    &-access{
+        display: flex;
+        flex-direction: column;
+        label{
+            margin-top: 1em;
+            width: 300px;
+            &:first-child{
+                margin-top: 0;
+            }
+        }
+        input{
+            width: 20px;
+        }
+    }
+    &-actions{
+        display: flex;
+        button{
+            margin-right: 1em;
+            @include input_reset();
+            cursor: pointer;
+            margin-top: 1.5em;
+            padding: .5em 1em;
+            border-radius: 5px;
+            border: 1px solid #9b9b9b;
+            background: #FFFF66;
+        }
+    }
+    .delete{
+        background-color: #ff7777;
+    }
+    .edit, .save{
+        background-color: #35fd50;
+    }
+}
+
+@include media("phone"){
+    .new_form{
+        &-input{
+            flex-direction: column;
+            label{
+                margin-bottom: 5px;
+            }
+        }
+        &-actions{
+            flex-direction: column;
+        }
     }
 }

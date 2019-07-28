@@ -24,16 +24,35 @@
                     <td 
                         v-for="(key, j) in headers"
                         :key="j">
-                        <span v-if="item[key.value]">
-                            {{item[key.value]}}
+                        <span v-if="key.value == 'prices'">
+                            {{item.prices.kzt}} тг
+                            {{item.prices.rub}} руб
+                            {{item.prices.usd}} $
+                        </span>
+                        <span v-else-if="key.value == 'access'">
+                            <span 
+                                v-for="(access, k) in item[key.value]"
+                                :key="k">
+                                {{access}} <br>
+                            </span>
+                        </span>
+                        <span v-else>
+                            <span v-if="item[key.value]">
+                                {{item[key.value]}}
+                            </span>
                         </span>
                     </td>
                     <td v-if="actions">
                         <div class="table_actions">
-                            <div class="table_action">
+                            <div 
+                                class="table_action" 
+                                @click="editItem(item)">
                                 Редактировать
                             </div>
-                            <div class="table_action" v-if="deleted">
+                            <div 
+                                v-if="deleted"
+                                class="table_action"
+                                @click="deleteItem(item)"> 
                                 Удалить
                             </div>
                         </div>
@@ -51,6 +70,14 @@ export default {
         data: Array,
         actions: Boolean,
         deleted: Boolean
+    },
+    methods: {
+        editItem(item){
+            this.$emit("edit", item);
+        },
+        deleteItem(item){
+            this.$emit("delete", item);
+        }
     }
 }
 </script>

@@ -31,7 +31,39 @@ const router = new Router({
             meta: {
                 requaresAuth: true
             }
-        }
+        },
+        {
+            path: "/products",
+            name: "products",
+            component: () => import("./views/Products/Products.vue"),
+            meta: {
+                requaresAuth: true
+            }
+        },
+        {
+            path: "/managers",
+            name: "managers",
+            component: () => import("./views/Managers/Managers.vue"),
+            meta: {
+                requaresAuth: true
+            }
+        },
+        {
+            path: "/new_manager",
+            name: "new_manager",
+            component: () => import("./views/NewManager/NewManager.vue"),
+            meta: {
+                requaresAuth: true
+            }
+        },
+        {
+            path: "/history",
+            name: "history",
+            component: () => import("./views/History/History.vue"),
+            meta: {
+                requaresAuth: true
+            }
+        },
     ]
 });
 

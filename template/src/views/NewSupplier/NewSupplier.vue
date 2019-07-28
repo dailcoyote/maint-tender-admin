@@ -3,26 +3,26 @@
         <div class="new_supplier">
             <v-navigation name="Добавить поставщика" allowBack></v-navigation>
             <div class="new_supplier-content content">
-                <form @submit.prevent="" class="new_supplier-form">
-                    <div class="new_supplier-input">
+                <form @submit.prevent="" class="new_form">
+                    <div class="new_form-input">
                         <label>Поставщик (название организации)</label>
                         <input type="text" v-model="title">
                     </div>
-                    <div class="new_supplier-input">
+                    <div class="new_form-input">
                         <label>Юр.Адрес</label>
                         <input type="text" v-model="address">
                     </div>
-                    <div class="new_supplier-input">
+                    <div class="new_form-input">
                         <label>Имя Менеджера</label>
                         <input type="text" v-model="manager_name">
                     </div>
-                    <div class="new_supplier-input">
+                    <div class="new_form-input">
                         <label>Номер менеджера</label>
                         <input type="text" v-model="manager_phone">
                     </div>
-                    <div class="new_supplier-input">
+                    <div class="new_form-input">
                         <label>Импорт прайс списка</label>
-                        <div class="new_supplier-file">
+                        <div class="new_form-file">
                             <label>
                                 <input type="file" @change="fileChange">
                                 {{file_name}}
@@ -32,11 +32,13 @@
                             </button>
                         </div>
                     </div>
-                    <button 
-                        class="new_supplier-button"
-                        type="submit">
-                        Сохранить
-                    </button>
+                    <div class="new_form-actions">
+                        <button 
+                            class="new_form-button"
+                            type="submit">
+                            Сохранить
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

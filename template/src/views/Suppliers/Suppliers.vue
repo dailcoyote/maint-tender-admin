@@ -19,9 +19,9 @@
             <div class="suppliers-content content">
                 <div class="suppliers-filter">
                     <v-filter 
+                        isSuppliers
                         :suppliers="suppliers"
-                        isProduct
-                        :quantity="suppliers.length"
+                        :quantity="data.length"
                         @search="search"
                         @get_supplier="getSupplier">
                     </v-filter>
@@ -29,7 +29,7 @@
                 <div class="suppliers-table">
                     <v-table 
                         :headers="headers" 
-                        :data="data" 
+                        :data="data"
                         actions
                         deleted>
                     </v-table>
@@ -44,6 +44,12 @@ export default {
     data(){
         return{
             suppliers: [
+                {
+                    title: "Nike",
+                    value: "0"
+                }
+            ],
+            categories: [
                 {
                     title: "Nike",
                     value: "0"
