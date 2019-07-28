@@ -1,0 +1,38 @@
+@import "@/styles/variables.scss";
+
+.table{
+    margin-top: 2em;
+    overflow: auto;
+    &::-webkit-scrollbar{
+        height: 3px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: #585858;
+        height: 2px;
+    }
+    &::-webkit-scrollbar-track{
+        background-color: #dbdbdb;
+    }
+    font-size: .8rem;
+    max-width: 1105px;
+    table{
+        border-collapse:collapse;
+        width: 1100px;
+        text-align: left;
+        overflow: auto;
+        table-layout: fixed;
+        th, td{
+            border-bottom: 1px solid #7c7c7c;
+            padding: 1.5em;
+            text-align: center;
+        }
+    }
+    &_action{
+        margin-top: 1em;
+        cursor: pointer;
+        color: #42A5F5;
+        &:first-child{
+            margin-top: 0;
+        }
+    }
+}

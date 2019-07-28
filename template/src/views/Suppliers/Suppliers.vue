@@ -14,11 +14,6 @@
                             Добавить поставщика
                         </span>
                     </button>
-                    <v-dialog 
-                        v-if="suppliers_dialog" 
-                        @close="suppliers_dialog = false">
-                        Добавить поставщика
-                    </v-dialog>
                 </template>
             </v-navigation>
             <div class="suppliers-content content">
@@ -31,6 +26,14 @@
                         @get_supplier="getSupplier">
                     </v-filter>
                 </div>
+                <div class="suppliers-table">
+                    <v-table 
+                        :headers="headers" 
+                        :data="data" 
+                        actions
+                        deleted>
+                    </v-table>
+                </div>
             </div>
         </div>
     </div>
@@ -40,12 +43,55 @@ import "./suppliers.scss"
 export default {
     data(){
         return{
-            suppliers_dialog: false,
             suppliers: [
                 {
                     title: "Nike",
                     value: "0"
                 }
+            ],
+            headers: [
+                {
+                    title: "Название компании",
+                    value: "title"
+                },
+                {
+                    title: "Юр. адрес",
+                    value: "address"
+                },
+                {
+                    title: "Номер менеджера",
+                    value: "manager_phone"
+                },
+                {
+                    title: "Регистрация",
+                    value: "register_date"
+                },
+            ],
+            data: [
+                {
+                    title: "Alser",
+                    address: "Алматы, Абая гагарина",
+                    manager_phone: "8777586548",
+                    register_date: "12.06.2019"
+                },
+                {
+                    title: "Alser",
+                    address: "Алматы, Абая гагарина, дом 8 квартира 17",
+                    manager_phone: "8777586548",
+                    register_date: "12.06.2019"
+                },
+                {
+                    title: "Alser",
+                    address: "Алматы, Абая гагарина",
+                    manager_phone: "8777586548",
+                    register_date: "12.06.2019"
+                },
+                {
+                    title: "Alser",
+                    address: "Алматы, Абая гагарина",
+                    manager_phone: "8777586548",
+                    register_date: "12.06.2019"
+                },
             ]
         }
     },
