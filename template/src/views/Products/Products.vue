@@ -24,8 +24,45 @@
                     <v-dialog 
                         v-if="dialog"
                         @close="closeDialog">
-                        <!--// TODO:  форма для редактирования продукта -->
-                        {{current_product}}
+                        <form @submit.prevent="" class="products_form">
+                            <div class="products_form-col">
+                                <div class="products_form-item">
+                                    Товар: {{current_product.product}}
+                                </div>
+                                <div class="products_form-item">
+                                    Модель: {{current_product.model}}
+                                </div>
+                                <div class="products_form-item">
+                                    Категория: {{current_product.category}}
+                                </div>
+                            </div>
+                            <div class="products_form-col">
+                                <div class="products_form-item">
+                                    Цены
+                                    <div class="products_form-prices">
+                                        <div class="products_form-input">
+                                            <label>
+                                                KZT: 
+                                            </label>
+                                            <input type="text" v-model="current_product.prices.kzt">
+                                        </div>
+                                        <div class="products_form-input">
+                                            <label>
+                                                РУБ: 
+                                            </label>
+                                            <input type="text" v-model="current_product.prices.rub">
+                                        </div>
+                                        <div class="products_form-input">
+                                            <label>
+                                                USD: 
+                                            </label>
+                                            <input type="text" v-model="current_product.prices.usd">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="save">Сохранить</button>
+                            </div>
+                        </form>
                     </v-dialog>
                 </div>
             </div>

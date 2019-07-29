@@ -1,1 +1,54 @@
 @import "@/styles/variables.scss";
+
+.products_form{
+    margin-top: 1em;
+    font-size: 1.1rem;
+    line-height: 200%;
+    display: flex;
+    &-col{
+        margin-right: 3em;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    &-prices{
+        display: flex;
+        flex-direction: column;
+    }
+    &-input{
+        margin-top: 1em;
+        display: flex;
+        label{
+            width: 50px;
+        }
+        input{
+            @include input-reset();
+            border: 1px solid #ddd;
+            padding: 0 5px;
+            &:focus{
+                border-color: #6178fa;
+            }
+        }
+        &:first-child{
+            margin-top: 0;
+        }
+    }
+    button{
+        cursor: pointer;
+        margin-top: 1em;
+        @include input-reset();
+        padding: 10px;
+        width: 100%;
+        background-color: #ddd;
+    }
+}
+
+@include media("phone"){
+    .products_form{
+        display: flex;
+        flex-direction: column;
+        &-col{
+            margin-right: 0;
+        }
+    }
+}

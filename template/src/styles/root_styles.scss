@@ -54,7 +54,13 @@ label {
     }
 }
 
+.delete{
+    background-color: #ff7777;
+}
 
+.edit, .save{
+    background-color: #35fd50;
+}
 
 .new_form{
     &-input{
@@ -117,12 +123,6 @@ label {
             border: 1px solid #9b9b9b;
             background: #FFFF66;
         }
-    }
-    .delete{
-        background-color: #ff7777;
-    }
-    .edit, .save{
-        background-color: #35fd50;
     }
 }
 
