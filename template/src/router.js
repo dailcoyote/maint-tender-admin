@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-// import store from '@/store';
-
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -21,7 +20,8 @@ const router = new Router({
             name: "suppliers",
             component: () => import("./views/Suppliers/Suppliers.vue"),
             meta: {
-                requaresAuth: true
+                requaresAuth: true,
+                access: "ADMIN^SUPPLIERS"
             }
         },
         {
@@ -29,7 +29,8 @@ const router = new Router({
             name: "new_supplier",
             component: () => import("./views/NewSupplier/NewSupplier.vue"),
             meta: {
-                requaresAuth: true
+                requaresAuth: true,
+                access: "ADMIN^SUPPLIERS"
             }
         },
         {
@@ -37,7 +38,8 @@ const router = new Router({
             name: "products",
             component: () => import("./views/Products/Products.vue"),
             meta: {
-                requaresAuth: true
+                requaresAuth: true,
+                access: "ADMIN^PRODUCTS"
             }
         },
         {
@@ -45,7 +47,8 @@ const router = new Router({
             name: "managers",
             component: () => import("./views/Managers/Managers.vue"),
             meta: {
-                requaresAuth: true
+                requaresAuth: true,
+                access: "ADMIN^USERS"
             }
         },
         {
@@ -53,7 +56,8 @@ const router = new Router({
             name: "new_manager",
             component: () => import("./views/NewManager/NewManager.vue"),
             meta: {
-                requaresAuth: true
+                requaresAuth: true,
+                access: "ADMIN^USERS"
             }
         },
         {
@@ -61,31 +65,36 @@ const router = new Router({
             name: "history",
             component: () => import("./views/History/History.vue"),
             meta: {
-                requaresAuth: true
+                requaresAuth: true,
+                access: "ADMIN^USERS"
             }
         },
     ]
 });
 
-
-
-// router.beforeEach((to, from, next) => {
-//     const requaresAuth = to.matched.some(record => record.meta.requaresAuth);
-//     const currentUser = store.state.token;
-//     const isTimeOver =
-//         store.state.tokenEXP < Math.floor(new Date().getTime() / 1000);
-//     if (requaresAuth && !currentUser) {
-//         next("/login");
-//     } else if (requaresAuth && currentUser) {
-//         if (isTimeOver) {
-//             next("/login");
-//         }
-//         next();
-//     } else {
-//         next();
-//     }
-// });
-
-
+router.beforeEach((to, from, next) => {
+    const requaresAuth = to.matched.some(record => record.meta.requaresAuth);
+    const access = to.meta.access;
+    const currentUser = store.state.token;
+    const isTimeOver = store.state.tokenEXP < Math.floor(new Date().getTime() / 1000);
+    if (requaresAuth && !currentUser) {
+        next("/login");
+    } else if (requaresAuth && currentUser) {
+        const user_access = store.state.user.adminControls;
+        if (isTimeOver || user_access[0] == "NO_ACCESS") {
+            next("/login");
+        }else if(user_access[0] == "SUPER_ADMIN"){
+            next();
+        }else{
+            if(user_access.includes(access)){
+                next();
+            }else{
+                next(false);
+            }
+        }
+    } else {
+        next();
+    }
+});
 
 export default router;

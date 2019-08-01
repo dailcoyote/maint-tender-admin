@@ -24,69 +24,27 @@
             </div>
         </div>
         <transition name="open_sidebar">
-            <div 
-                class="navigation-sidebar" 
-                v-if="sidebar">
-                <div 
-                    class="navigation-sidebar_background" 
-                    @click="sidebar = false">
-                </div>
-                <div class="navigation-sidebar_content">
-                    <div class="navigation-sidebar_close-button">
-                        <h1>Меню</h1>
-                        <img 
-                            src="@/assets/close.svg" 
-                            alt="close"
-                            @click="sidebar = false">
-                    </div>
-                    <div class="navigation-sidebar_content-links">
-                        <router-link
-                            class="navigation-sidebar_content-link"
-                            v-for="(item, i) in menu_links"
-                            :key="i"
-                            :to="item.link">
-                            {{item.title}}
-                        </router-link>
-                    </div>
-                    <div class="navigation-sidebar_content-logout">
-                        Выйти
-                        <i class="material-icons">
-                            input
-                        </i>
-                    </div>
-                </div>
-            </div>
+            <v-sidebar 
+                v-if="sidebar"
+                @close="sidebar = false">
+            </v-sidebar>
         </transition>
     </div>
 </template>
 <script>
 import "./navigation.scss"
+import VSidebar from "../Sidebar/Sidebar"
 export default {
     props: {
         name: String,
         allowBack: Boolean
     },
+    components: {
+        VSidebar
+    },
     data(){
         return{
             sidebar: false,
-            menu_links: [
-                {
-                    title: "Поставщики",
-                    link: "suppliers"
-                },
-                {
-                    title: "Товары",
-                    link: "products"
-                },
-                {
-                    title: "Сотрудники",
-                    link: "managers"
-                },
-                {
-                    title: "История",
-                    link: "history"
-                },
-            ]
         }
     }
 }

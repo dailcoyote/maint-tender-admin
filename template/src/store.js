@@ -1,10 +1,36 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import jwt from "jsonwebtoken"
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-	state: {},
-	mutations: {},
-	actions: {}
+	state: {
+		user: null,
+        token: null,
+        tokenEXP: null
+	},
+	mutations: {
+		login(state, payload) {
+			state.token = payload.accessToken;
+			state.tokenEXP = jwt.decode(payload.accessToken).exp;
+            state.user = {
+				userID: payload.userID,
+				fullname: payload.fullname,
+				username: payload.username,
+				role: payload.role,
+				accessControls: payload.accessControls,
+				adminControls: payload.adminControls
+			}
+		},
+		logout(state){
+            state.user = null;
+            state.token = null;
+            state.tokenEXP = null;
+        }
+	},
+	actions: {
+		login({ commit }, payload){
+            commit('login', payload);
+        }
+	}
 });
