@@ -1,4 +1,5 @@
 import Vue from "vue";
+import VueSweetalert2 from 'vue-sweetalert2';
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -11,7 +12,10 @@ Vue.component('v-navigation', VNavigation);
 Vue.component('v-filter', VFilter);
 Vue.component('v-dialog', VDialog);
 Vue.component('v-table', VTable);
-
+Vue.use(VueSweetalert2, {
+	confirmButtonColor: '#42A5F5',
+	cancelButtonColor: '#ff7674'
+  });
 
 Vue.config.productionTip = false;
 

@@ -42,28 +42,35 @@ export default {
                     password: this.password
                 });
                 console.log(response);
-                this.isLoading = false;
                 const access = response.data.adminControls;
-                for(let item of access){
-                    if(item == "NO_ACCESS"){
-                        throw "NO_ACCESS"
-                    }
+                if(access.indexOf("NO_ACCESS") >= 0) {
+                    throw "NO_ACCESS";
                 }
+                this.isLoading = false;
                 this.$store.dispatch('login', response.data);
                 this.$router.push('/');
-                
-            }catch(err){
+            }
+            catch(err){
                 if(err == "NO_ACCESS"){
-                    alert("Пользователь не имеет доступа к админ панеле");
+                    this.$swal({
+                        type: 'error',
+                        text: "Пользователь не имеет доступа к админ панели!"
+                    });
                 }else{
                     const error = err.response;
-                    this.isLoading = false;
                     if(error.data.error == "Unauthorized"){
-                        alert(error.data.message);
+                        this.$swal({
+                            type: 'error',
+                            text: error.data.message || "У Вас отсутствуют права доступа к этому ресурсу!"
+                        });
                     }else{
-                        alert(error.data);
+                        this.$swal({
+                            type:'error',
+                            text: error.data
+                        });
                     }
                 }
+                this.isLoading = false;
             }
         }
     }
