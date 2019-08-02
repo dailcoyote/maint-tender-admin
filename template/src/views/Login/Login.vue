@@ -54,14 +54,14 @@ export default {
                 if(err == "NO_ACCESS"){
                     this.$swal({
                         type: 'error',
-                        text: "Пользователь не имеет доступа к админ панели!"
+                        text: "У Вас отсутствуют права доступа к этому ресурсу!"
                     });
                 }else{
                     const error = err.response;
                     if(error.data.error == "Unauthorized"){
                         this.$swal({
                             type: 'error',
-                            text: error.data.message || "У Вас отсутствуют права доступа к этому ресурсу!"
+                            text: error.data.message || "Вы не прошли аутентификацию. Проверьте правильность ввода имени пользователя и пароля!"
                         });
                     }else{
                         this.$swal({
