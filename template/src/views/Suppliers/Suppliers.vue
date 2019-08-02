@@ -40,29 +40,20 @@
 </template>
 <script>
 import "./suppliers.scss"
+import SuppliersServices from "@/services/Suppliers"
+import FilterServices from "@/services/Filter"
 export default {
     data(){
         return{
-            suppliers: [
-                {
-                    title: "Nike",
-                    value: "0"
-                }
-            ],
-            categories: [
-                {
-                    title: "Nike",
-                    value: "0"
-                }
-            ],
+            suppliers: [],
             headers: [
                 {
                     title: "Название компании",
-                    value: "title"
+                    value: "name"
                 },
                 {
                     title: "Юр. адрес",
-                    value: "address"
+                    value: "legal_address"
                 },
                 {
                     title: "Номер менеджера",
@@ -70,43 +61,29 @@ export default {
                 },
                 {
                     title: "Регистрация",
-                    value: "register_date"
+                    value: "created_at"
                 },
             ],
-            data: [
-                {
-                    title: "Alser",
-                    address: "Алматы, Абая гагарина",
-                    manager_phone: "8777586548",
-                    register_date: "12.06.2019"
-                },
-                {
-                    title: "Alser",
-                    address: "Алматы, Абая гагарина, дом 8 квартира 17",
-                    manager_phone: "8777586548",
-                    register_date: "12.06.2019"
-                },
-                {
-                    title: "Alser",
-                    address: "Алматы, Абая гагарина",
-                    manager_phone: "8777586548",
-                    register_date: "12.06.2019"
-                },
-                {
-                    title: "Alser",
-                    address: "Алматы, Абая гагарина",
-                    manager_phone: "8777586548",
-                    register_date: "12.06.2019"
-                },
-            ]
+            data: []
         }
+    },
+    created(){
+        this.getSuppliers();
     },
     methods: {
         search(search_text){
             console.log(search_text);
         },
-        getSupplier(supplier){
-            console.log(supplier)
+        async getSuppliers(){
+            try{
+                let response = await SuppliersServices.getSuppliers();
+                this.data = response.data;
+            }catch(err){
+                console.log(err);
+            }
+        },
+        getSupplier(){
+            console.log("get")
         }
     }
 }

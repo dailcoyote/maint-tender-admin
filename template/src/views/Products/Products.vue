@@ -71,6 +71,7 @@
 </template>
 <script>
 import "./products.scss"
+import FilterServices from "@/services/Filter"
 export default {
     data(){
         return{
@@ -82,12 +83,7 @@ export default {
                     value: "0"
                 }
             ],
-            categories: [
-                {
-                    title: "Nike",
-                    value: "0"
-                }
-            ],
+            categories: [],
             headers: [
                 {
                     title: "Товар",
@@ -122,27 +118,23 @@ export default {
                     value: "created"
                 },
             ],
-            data: [
-                {
-                    product: "Ноутбук",
-                    model: "Леново G508",
-                    category: "Компьютеры",
-                    organization_name: "Alser",
-                    address: "Алматы, Абая гагарина",
-                    manager_phone: "8777586548",
-                    prices: {
-                        kzt: "20000,00",
-                        rub: "6005,00",
-                        usd: "46,13"
-                    },
-                    created: "12.06.2019"
-                }
-            ]
+            data: []
         }
+    },
+    created(){
+        this.getCategories();
     },
     methods: {
         search(search_text){
             console.log(search_text);
+        },
+        async getCategories(){
+            try{
+                let response = await FilterServices.getCategories();
+                this.categories = response.data;                
+            }catch(err){
+                console.log(err);
+            }
         },
         getSupplier(supplier){
             console.log(supplier)
