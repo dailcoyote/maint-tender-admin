@@ -31,7 +31,8 @@
                         :headers="headers" 
                         :data="data"
                         actions
-                        deleted>
+                        deleted
+                        @delete="deleteSupplier">
                     </v-table>
                 </div>
             </div>
@@ -78,6 +79,17 @@ export default {
             try{
                 let response = await SuppliersServices.getSuppliers();
                 this.data = response.data;
+            }catch(err){
+                console.log(err);
+            }
+        },
+        async deleteSupplier(item){
+            try{
+                let response = await SuppliersServices.deleteSupplier(item._id);
+                if(response.data.message){
+                    alert(response.data.message);
+                    this.getSuppliers();
+                }
             }catch(err){
                 console.log(err);
             }
