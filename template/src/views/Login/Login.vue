@@ -51,7 +51,12 @@ export default {
                 this.$router.push('/');
             }
             catch(err){
-                if(err == "NO_ACCESS"){
+                if(err.message == "Network Error") {
+                    this.$swal({
+                        type: 'question',
+                        text: 'Нет доступа связи к серверу данных!'
+                    });
+                } else if(err == "NO_ACCESS" || err.response.status == 403){
                     this.$swal({
                         type: 'error',
                         text: "У Вас отсутствуют права доступа к этому ресурсу!"
