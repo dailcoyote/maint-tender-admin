@@ -30,7 +30,7 @@ export default (err) => {
     } else if (response.status == 403) {
         return ({
             type: 'error',
-            text: "У Вас отсутствуют права доступа к административной панели!"
+            text: "У Вас отсутствуют права доступа к этому ресурсу!"
         });
     } else if (response.status == 404) {
         return ({
