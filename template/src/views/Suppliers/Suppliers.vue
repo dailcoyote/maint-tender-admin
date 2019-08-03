@@ -43,6 +43,7 @@
 import "./suppliers.scss"
 import SuppliersServices from "@/services/Suppliers"
 import FilterServices from "@/services/Filter"
+import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
     data(){
         return{
@@ -92,6 +93,7 @@ export default {
                 }
             }catch(err){
                 console.log(err);
+                this.$swal(httpErrorHandler(err));
             }
         },
         getSupplier(){
