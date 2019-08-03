@@ -3,14 +3,14 @@
         <div class="new_supplier">
             <v-navigation name="Добавить поставщика" allowBack></v-navigation>
             <div class="new_supplier-content content">
-                <form @submit.prevent="" class="new_form">
+                <form @submit.prevent="addNewSupplier" class="new_form">
                     <div class="new_form-input">
                         <label>Поставщик (название организации)</label>
-                        <input type="text" v-model="title">
+                        <input type="text" v-model="name">
                     </div>
                     <div class="new_form-input">
                         <label>Юр.Адрес</label>
-                        <input type="text" v-model="address">
+                        <input type="text" v-model="legal_address">
                     </div>
                     <div class="new_form-input">
                         <label>Имя Менеджера</label>
@@ -46,11 +46,15 @@
 </template>
 <script>
 import "./new_supplier.scss"
+import SuppliersServices from "@/services/Suppliers"
 export default {
+    props: {
+        action: String // Для определение типа (Создание или Редактирование)
+    },
     data(){
         return{
-            title: "",
-            address: "",
+            name: "",
+            legal_address: "",
             manager_name: "",
             manager_phone: "",
             price_list: "",
@@ -66,6 +70,21 @@ export default {
         deleteFile(){
             this.file_name = "Выберите файл";
             this.file_data = "";
+        },
+        async addNewSupplier(){
+            try{
+                let response = await SuppliersServices.addSupplier({
+                    name: this.name,
+                    legal_address:  this.legal_address,
+                    manager_name:  this.manager_name,
+                    manager_phone:  this.manager_phone,
+                    file: this.file_data
+                });
+                console.log(response);
+                this.$router.push("/suppliers");
+            }catch(err){
+                console.log(err);
+            }
         }
     }
 }
