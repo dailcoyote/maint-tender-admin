@@ -25,6 +25,7 @@
 <script>
 import "./login.scss"
 import AuthServices from "@/services/Auth"
+import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
     data(){
         return{
@@ -51,29 +52,14 @@ export default {
                 this.$router.push('/');
             }
             catch(err){
-                if(err.message == "Network Error") {
-                    this.$swal({
-                        type: 'question',
-                        text: 'Нет доступа связи к серверу данных!'
-                    });
-                } else if(err == "NO_ACCESS" || err.response.status == 403){
+                if(err == "NO_ACCESS"){
                     this.$swal({
                         type: 'error',
                         text: "У Вас отсутствуют права доступа к этому ресурсу!"
                     });
-                }else{
-                    const error = err.response;
-                    if(error.data.error == "Unauthorized"){
-                        this.$swal({
-                            type: 'error',
-                            text: error.data.message || "Вы не прошли аутентификацию. Проверьте правильность ввода имени пользователя и пароля!"
-                        });
-                    }else{
-                        this.$swal({
-                            type:'error',
-                            text: error.data
-                        });
-                    }
+                }
+                else {
+                    this.$swal(httpErrorHandler(err));
                 }
                 this.isLoading = false;
             }

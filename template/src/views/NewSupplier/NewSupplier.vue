@@ -47,6 +47,7 @@
 <script>
 import "./new_supplier.scss"
 import SuppliersServices from "@/services/Suppliers"
+import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
     props: {
         action: String // Для определение типа (Создание или Редактирование)
@@ -84,6 +85,7 @@ export default {
                 this.$router.push("/suppliers");
             }catch(err){
                 console.log(err);
+                this.$swal(httpErrorHandler(err));
             }
         }
     }
