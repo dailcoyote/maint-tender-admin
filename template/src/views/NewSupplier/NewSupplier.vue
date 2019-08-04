@@ -65,7 +65,7 @@ export default {
     methods: {
         fileChange(e){
             this.file_name = e.target.files[0].name;
-            this.file_data = e.target.files || e.dataTransfer.files;
+            this.file_data = e.target.files[0] || e.dataTransfer.files[0];
         },
         deleteFile(){
             this.file_name = "Выберите файл";
@@ -73,12 +73,16 @@ export default {
         },
         async addNewSupplier(){
             try{
-                let response = await SuppliersServices.addSupplier({
-                    name: this.name,
-                    legal_address:  this.legal_address,
-                    manager_name:  this.manager_name,
-                    manager_phone:  this.manager_phone,
-                    file: this.file_data[0]
+                let formData = new FormData();
+                formData.append("name", this.name);
+                formData.append("legal_address", this.legal_address);
+                formData.append("manager_name", this.manager_name);
+                formData.append("manager_phone", this.manager_phone);
+                formData.append("file", this.file_data);
+                let response = await SuppliersServices.addSupplier(formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
                 });
                 console.log(response);
                 this.$router.push("/suppliers");
