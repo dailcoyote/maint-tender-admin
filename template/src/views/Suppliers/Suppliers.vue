@@ -41,7 +41,6 @@
     </div>
 </template>
 <script>
-import "./suppliers.scss"
 import SuppliersServices from "@/services/Suppliers"
 import FilterMixin from "@/mixins/Filter"
 export default {

@@ -5,10 +5,7 @@
             <div class="history-content content">
                 <div class="history-filter">
                     <v-filter 
-                        isManagers
-                        :managers="data"
-                        @search="search"
-                        @get_managers="getManagers">
+                        isUsers>
                     </v-filter>
                 </div>
                 <div class="history-table">
@@ -24,7 +21,7 @@
     </div>
 </template>
 <script>
-import "./history.scss"
+import UserServices from "@/services/User"
 export default {
     data(){
         return{
@@ -35,29 +32,37 @@ export default {
                 },
                 {
                     title: "Логин",
-                    value: "login"
+                    value: "username"
                 },
                 {
                     title: "Доступ",
-                    value: "access"
+                    value: "access_controls"
                 }
             ],
-            data: [
-                {
-                    fullname: "Маша",
-                    login: "masha@tender.com",
-                    access: ["ЕАП", "РЕЕСТР", "САМРУККАЗЫНА"],
-                }
-            ]
+            data: []
         }
     },
+    created(){
+        this.getUsers();
+    },
     methods: {
-        search(search_text){
-            console.log(search_text);
+        async getUsers(){
+            try{
+                let response = await UserServices.getUsers();
+                this.data = response.data;
+                console.log(response.data)
+                this.data.sort((a, b) => {
+                    if(a.fullname.toLowerCase() > b.fullname.toLowerCase()){
+                        return 1;
+                    }else if(a.fullname.toLowerCase() < b.fullname.toLowerCase()){
+                        return -1;
+                    }
+                    return 0;
+                });
+            }catch(err){
+                console.log(err.response)
+            }
         },
-        getManagers(manager){
-            console.log(manager)
-        }
     }
 }
 </script>

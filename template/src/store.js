@@ -10,6 +10,7 @@ export default new Vuex.Store({
         token: null,
 		tokenEXP: null,
 		current_supplier: null,
+		current_user: null,
 		action: null
 	},
 	plugins: [createPersistedState()],
@@ -36,6 +37,9 @@ export default new Vuex.Store({
 		},
 		setAction(state, action){
 			state.action = action
+		},
+		setCurrentUser(state, user){
+			state.current_user = user
 		}
 	},
 	actions: {

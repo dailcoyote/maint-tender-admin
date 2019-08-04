@@ -23,14 +23,14 @@
                 </option>
             </select>
         </div>
-        <div class="filter-item" v-if="isManagers">
-            <select v-model="manager" @change="getManager">
+        <div class="filter-item" v-if="isUsers">
+            <select v-model="users" @change="getUser">
                 <option value="">Фильтр по сотрудникам</option>
                 <option 
-                    v-for="(item, i) in managers"
+                    v-for="(item, i) in users"
                     :key="i"
-                    :value="item.value">
-                    {{item.name}}
+                    :value="item.fullname">
+                    {{item.fullname}}
                 </option>
             </select>
         </div>
@@ -56,10 +56,10 @@ export default {
     props: {
         suppliers: Array,
         categories: Array,
-        managers: Array,
+        users: Array,
         quantity: Number,
         isProduct: Boolean,
-        isManagers: Boolean,
+        isUsers: Boolean,
         isSuppliers: Boolean
     },
     data(){
@@ -67,7 +67,7 @@ export default {
             search_text: "",
             supplier: "",
             category: "",
-            manager: ""
+            user: ""
         }
     },
     methods: {
@@ -80,8 +80,8 @@ export default {
         getCategory(){
             this.$emit("get_category", this.category);
         },
-        getManager(){
-            this.$emit("get_manager", this.manager);
+        getUser(){
+            this.$emit("get_user", this.user);
         }
     }
 }

@@ -1,5 +1,6 @@
 import FilterServices from "@/services/Filter"
 import SuppliersServices from "@/services/Suppliers"
+import UserServices from "@/services/User"
 
 export default {
     data(){
@@ -9,6 +10,7 @@ export default {
             search_text: null,
             suppliers: [],
             categories: [],
+            users: []
         }
     },
     computed: {
@@ -42,6 +44,7 @@ export default {
     created(){
         this.getFilterCategories();
         this.getFilterSuppliers();
+        this.getFilterUsers();
     },
     methods: {
         search(search_text){
@@ -52,6 +55,9 @@ export default {
         },
         getDataByCategory(id){
             this.filter_category = id;
+        },
+        getDataByUsers(id){
+            console.log(id);
         },
         async getFilterCategories(){
             try{
@@ -70,5 +76,15 @@ export default {
                 console.log(err);
             }
         },
+        async getFilterUsers(){
+            try{
+                this.users = [];
+                let response = await UserServices.getUsers();
+                this.users = response.data;
+                console.log(this.users);
+            }catch(err){
+                console.log(err);
+            }
+        }
     }
 }

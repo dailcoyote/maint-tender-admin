@@ -45,7 +45,6 @@
     </div>
 </template>
 <script>
-import "./new_supplier.scss"
 import SuppliersServices from "@/services/Suppliers"
 import { mapState } from 'vuex'
 export default {
