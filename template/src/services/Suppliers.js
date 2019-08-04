@@ -4,6 +4,9 @@ export default {
     getOneSupplier(id) {
         return Api().get(`suppliers/${id}`);
     },
+    getSuppliersShortList() {
+        return Api().get(`suppliers/short/list`);
+    },
     getSuppliers() {
         return Api().get(`suppliers`);
     },

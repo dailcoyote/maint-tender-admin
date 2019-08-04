@@ -1,7 +1,7 @@
 <template>
   <div class="new_supplier-page">
     <div class="new_supplier">
-      <v-navigation name="Добавить поставщика" allowBack></v-navigation>
+      <v-navigation v-bind:name="title" allowBack></v-navigation>
       <div class="new_supplier-content content">
         <form @submit.prevent="addNewSupplier" class="new_form">
           <div class="new_form-input">
@@ -44,7 +44,8 @@ import SuppliersServices from "@/services/Suppliers";
 import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
   props: {
-    action: String // Для определение типа (Создание или Редактирование)
+    action: String, // Для определение типа (Создание или Редактирование)
+    title: String
   },
   data() {
     return {
@@ -117,7 +118,6 @@ export default {
         console.log(response);
         this.$router.push("/suppliers");
       } catch (err) {
-        console.log(err);
         this.$swal(httpErrorHandler(err));
       }
     }

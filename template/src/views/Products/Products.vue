@@ -136,7 +136,7 @@ export default {
     },
     created(){
         this.getCategories();
-        this.getSuppliers();
+        this.getSuppliersShortList();
         this.getProducts();
     },
     computed: {
@@ -183,10 +183,10 @@ export default {
                 console.log(err);
             }
         },
-        async getSuppliers(){
+        async getSuppliersShortList(){
             try{
                 this.suppliers = [];
-                let response = await SuppliersServices.getSuppliers();
+                let response = await SuppliersServices.getSuppliersShortList();
                 this.suppliers = response.data;
             }catch(err){
                 console.log(err);

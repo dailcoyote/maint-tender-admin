@@ -25,20 +25,20 @@ const router = new Router({
             }
         },
         {
-            path: "/new_supplier",
+            path: "/suppliers/new",
             name: "new_supplier",
             component: () => import("./views/NewSupplier/NewSupplier.vue"),
-            props: { default: true, action: "NEW" },
+            props: { default: true, action: "NEW", title: 'Добавить поставщика' },
             meta: {
                 requaresAuth: true,
                 access: "ADMIN^SUPPLIERS"
             }
         },
         {
-            path: "/supplier/:id",
-            name: "supplier_form",
+            path: "/supplier/edit/:id",
+            name: "edit_supplier",
             component: () => import("./views/NewSupplier/NewSupplier.vue"),
-            props: { default: true, action: "UPDATE" },
+            props: { default: true, action: "UPDATE", title: 'Редактировать поставщика' },
             meta: {
                 requaresAuth: true,
                 access: "ADMIN^SUPPLIERS"

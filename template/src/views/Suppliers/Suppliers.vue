@@ -6,7 +6,7 @@
                 <template #actions>
                     <button 
                         class="suppliers_add-button" 
-                        @click="$router.push('/new_supplier')">
+                        @click="$router.push('/suppliers/new')">
                         <i class="material-icons">
                             add
                         </i>
@@ -73,7 +73,7 @@ export default {
         }
     },
     created(){
-        this.getSuppliers();
+        this.getSuppliersShortList();
         this.getSuppliersDataset();
     },
     computed: {
@@ -107,13 +107,13 @@ export default {
         search(search_text){
             this.search_text = search_text;
         },
-        async getSuppliers(){
+        async getSuppliersShortList(){
             try{
                 this.suppliers = [];
-                let response = await SuppliersServices.getSuppliers();
+                let response = await SuppliersServices.getSuppliersShortList();
                 this.suppliers = response.data;
             }catch(err){
-                console.log(err);
+                this.$swal(httpErrorHandler(err));
             }
         },
         async getSuppliersDataset(){
@@ -130,7 +130,7 @@ export default {
                     })
                 });
             }catch(err){
-                console.log(err);
+                this.$swal(httpErrorHandler(err));
             }
         },
         async deleteSupplier(item){
@@ -149,7 +149,7 @@ export default {
             this.filter_supplier = supplier;
         },
         editSupplier(item){
-            this.$router.push(`/supplier/${item._id}`) ;
+            this.$router.push(`/supplier/edit/${item._id}`) ;
         },
         getSupplier(){
         }
