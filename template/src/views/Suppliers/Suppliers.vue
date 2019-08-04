@@ -37,15 +37,21 @@
                     </v-table>
                 </div>
             </div>
+            <v-notification v-bind:list="notifications" v-bind:callback="onNotify"></v-notification>
         </div>
     </div>
 </template>
 <script>
 import "./suppliers.scss"
+import { mapState } from 'vuex'
+import VNotification from "@/components/Notification/Notification"
 import SuppliersServices from "@/services/Suppliers"
 import FilterServices from "@/services/Filter"
 import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
+    components: {
+        VNotification
+    },
     data(){
         return{
             suppliers: [],
@@ -72,11 +78,8 @@ export default {
             search_text: null
         }
     },
-    created(){
-        this.getSuppliersShortList();
-        this.getSuppliersDataset();
-    },
     computed: {
+        ...mapState(['notifications']),
         filterData(){
             if(!this.search_text && !this.filter_supplier){
                 return this.data;
@@ -96,16 +99,31 @@ export default {
             else {
                 return this.data.filter(el => {
                     if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1
-                     && el._id == this.filter_supplier){
+                        && el._id == this.filter_supplier){
                         return el;
                     }
                 });
             }
         }
     },
+    created(){
+        this.getSuppliersShortList();
+        this.getSuppliersDataset();
+    },
+    mounted() {
+        },
     methods: {
+        onNotify(){
+            this.$store.commit('notificationsRead');
+        },
         search(search_text){
             this.search_text = search_text;
+        },
+        getSupplierById(supplier){
+            this.filter_supplier = supplier;
+        },
+        editSupplier(item){
+            this.$router.push(`/supplier/edit/${item._id}`) ;
         },
         async getSuppliersShortList(){
             try{
@@ -137,19 +155,13 @@ export default {
             try{
                 let response = await SuppliersServices.deleteSupplier(item._id);
                 if(response.data.message){
-                    alert(response.data.message);
-                    this.getSuppliers();
+                    this.$store.commit("pushNotification", response.data.message);
+                    this.getSuppliersDataset();
                 }
             }catch(err){
                 console.log(err);
                 this.$swal(httpErrorHandler(err));
             }
-        },
-        getSupplierById(supplier){
-            this.filter_supplier = supplier;
-        },
-        editSupplier(item){
-            this.$router.push(`/supplier/edit/${item._id}`) ;
         }
     }
 }

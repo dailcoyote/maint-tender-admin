@@ -123,6 +123,7 @@ export default {
           });
         }
         console.log(response);
+        this.$store.commit("pushNotification", response.data.message);
         this.$router.push("/suppliers");
       } catch (err) {
         this.$swal(httpErrorHandler(err));

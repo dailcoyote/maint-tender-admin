@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueSweetalert2 from 'vue-sweetalert2';
 import Loading from "vue-loading-overlay";
+import Snackbar from "vuejs-snackbar";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -13,6 +14,7 @@ Vue.component('v-navigation', VNavigation);
 Vue.component('v-filter', VFilter);
 Vue.component('v-dialog', VDialog);
 Vue.component('v-table', VTable);
+Vue.component('v-snackbar', Snackbar);
 Vue.use(VueSweetalert2, {
 	confirmButtonColor: '#42A5F5',
 	cancelButtonColor: '#ff7674'
