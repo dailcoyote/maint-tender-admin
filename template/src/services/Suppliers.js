@@ -1,16 +1,16 @@
 import Api from '@/services/Api'
 
 export default {
-    getSuppliers(){
+    getSuppliers() {
         return Api().get(`suppliers`);
     },
-    deleteSupplier(id){
+    deleteSupplier(id) {
         return Api().delete(`suppliers/${id}`);
     },
-    addSupplier(payload){
-        return Api().post(`suppliers/upload`, payload);
+    addSupplier(payload, config) {
+        return Api().post(`suppliers/upload`, payload, config);
     },
-    updateSupplier(payload){
+    updateSupplier(payload) {
         return Api().put(`suppliers/upload/${payload._id}`, payload);
     }
 }
