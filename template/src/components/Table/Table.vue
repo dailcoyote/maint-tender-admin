@@ -25,9 +25,17 @@
                         v-for="(key, j) in headers"
                         :key="j">
                         <span v-if="key.value == 'prices'">
-                            {{item.prices.kzt}} тг
-                            {{item.prices.rub}} руб
-                            {{item.prices.usd}} $
+                            <span v-if="item.prices.kzt">
+                                {{item.prices.kzt}} тг
+                            </span>
+                            <br>
+                            <span v-if="item.prices.rub">
+                                {{item.prices.rub}} руб
+                            </span>
+                            <br>
+                            <span v-if="item.prices.usd">
+                                {{item.prices.usd}} $
+                            </span>
                         </span>
                         <span v-else-if="key.value == 'access'">
                             <span 

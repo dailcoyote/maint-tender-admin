@@ -6,14 +6,16 @@
                     class="login-form"
                     @submit.prevent="login">
                     <div class="login-form_item">
-                        <label>Эл. почта</label>
-                        <input type="email" v-model="email">
+                        <label>Логин</label>
+                        <input type="text" v-model="username">
                     </div>
                     <div class="login-form_item">
                         <label>Пароль</label>
                         <input type="password" v-model="password">
                     </div>
-                    <button :disabled="isLoading">
+                    <button 
+                        type="submit" 
+                        :disabled="isLoading">
                         <span v-if="isLoading">Загрузка...</span>
                         <span v-else>Войти</span>
                     </button>
@@ -28,7 +30,7 @@ import AuthServices from "@/services/Auth"
 export default {
     data(){
         return{
-            email: "admin@maint.kz",
+            username: "admin@maint.kz",
             password: "maint1234",
             isLoading: false,
         }
@@ -38,7 +40,7 @@ export default {
             try{
                 this.isLoading = true;
                 let response = await AuthServices.login({
-                    username: this.email,
+                    username: this.username,
                     password: this.password
                 });
                 console.log(response);

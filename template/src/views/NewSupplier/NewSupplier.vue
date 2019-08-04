@@ -65,7 +65,7 @@ export default {
     methods: {
         fileChange(e){
             this.file_name = e.target.files[0].name;
-            this.file_data = e.target.value;
+            this.file_data = e.target.files || e.dataTransfer.files;
         },
         deleteFile(){
             this.file_name = "Выберите файл";
@@ -78,12 +78,12 @@ export default {
                     legal_address:  this.legal_address,
                     manager_name:  this.manager_name,
                     manager_phone:  this.manager_phone,
-                    file: this.file_data
+                    file: this.file_data[0]
                 });
                 console.log(response);
                 this.$router.push("/suppliers");
             }catch(err){
-                console.log(err);
+                console.log(err.response);
             }
         }
     }

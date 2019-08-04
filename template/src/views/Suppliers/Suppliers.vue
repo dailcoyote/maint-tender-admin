@@ -62,7 +62,7 @@ export default {
                 },
                 {
                     title: "Регистрация",
-                    value: "created_at"
+                    value: "created"
                 },
             ],
             data: []
@@ -78,7 +78,14 @@ export default {
         async getSuppliers(){
             try{
                 let response = await SuppliersServices.getSuppliers();
-                this.data = response.data;
+                response.data.forEach(el => {
+                    this.data.push({
+                        name: el.name,
+                        legal_address: el.legal_address,
+                        manager_phone: el.manager_phone,
+                        created: el.created_at.split('T')[0]
+                    })
+                });
             }catch(err){
                 console.log(err);
             }

@@ -11,13 +11,14 @@
                         :categories="categories"
                         :quantity="data.length"
                         @search="search"
-                        @get_supplier="getSupplier">
+                        @get_supplier="getProductsBySupplier"
+                        @get_category="getProductsByCategory">
                     </v-filter>
                 </div>
                 <div class="products-table">
                     <v-table 
                         :headers="headers" 
-                        :data="data"
+                        :data="filterData"
                         actions
                         @edit="openDialog">
                     </v-table>
@@ -72,22 +73,19 @@
 <script>
 import "./products.scss"
 import FilterServices from "@/services/Filter"
+import SuppliersServices from "@/services/Suppliers"
+import ProductsServices from "@/services/Products"
 export default {
     data(){
         return{
             dialog: false,
             current_product: {},
-            suppliers: [
-                {
-                    title: "Nike",
-                    value: "0"
-                }
-            ],
+            suppliers: [],
             categories: [],
             headers: [
                 {
                     title: "Товар",
-                    value: "product"
+                    value: "name"
                 },
                 {
                     title: "Модель",
@@ -99,11 +97,11 @@ export default {
                 },
                 {
                     title: "Название организации",
-                    value: "organization_name"
+                    value: "supplier"
                 },
                 {
                     title: "Юр. адрес",
-                    value: "address"
+                    value: "legal_address"
                 },
                 {
                     title: "Номер менеджера",
@@ -118,26 +116,92 @@ export default {
                     value: "created"
                 },
             ],
-            data: []
+            data: [],
+            filter_supplier: null,
+            filter_category: null
         }
     },
     created(){
         this.getCategories();
+        this.getSuppliers();
+        this.getProducts();
+    },
+    computed: {
+        filterData(){
+            if(!this.filter_supplier && !this.filter_category){
+                return this.data;
+            }else{
+                if(this.filter_supplier && this.filter_category){
+                    return this.data.filter(el => {
+                        return el.supplierID == this.filter_supplier && el.categoryID == this.filter_category;
+                    });
+                }else if(this.filter_supplier && !this.filter_category){
+                    return this.data.filter(el => {
+                        return el.supplierID == this.filter_supplier;
+                    });
+                }else{
+                    return this.data.filter(el => {
+                        return el.categoryID == this.filter_category;
+                    });
+                }
+                
+            }
+        }
     },
     methods: {
         search(search_text){
-            console.log(search_text);
+            // if(this.searchStudent === ''){
+            //     return this.students;
+            // }else{
+            //     return this.students.filter(item => {
+            //         if(item.name.toLowerCase().indexOf(this.searchStudent.toLowerCase()) !== -1){
+            //             return item;
+            //         }
+            //     });
+            // }
         },
         async getCategories(){
             try{
                 let response = await FilterServices.getCategories();
-                this.categories = response.data;                
+                this.categories = response.data;
             }catch(err){
                 console.log(err);
             }
         },
-        getSupplier(supplier){
-            console.log(supplier)
+        async getSuppliers(){
+            try{
+                let response = await SuppliersServices.getSuppliers();
+                this.suppliers = response.data;
+            }catch(err){
+                console.log(err);
+            }
+        },
+        async getProducts(){
+            try{
+                let response = await ProductsServices.getProducts();
+                response.data.forEach(el => {
+                    this.data.push({
+                        name: el.name,
+                        model: el.model,
+                        category: el.category.title,
+                        categoryID: el.category._id,
+                        supplier: el.supplier.name,
+                        supplierID: el.supplier._id,
+                        legal_address: el.supplier.legal_address,
+                        manager_phone: el.supplier.manager_phone,
+                        prices: el.price,
+                        created: el.created_at.split('T')[0]
+                    })
+                });
+            }catch(err){
+                console.log(err);
+            }
+        },
+        getProductsBySupplier(supplier){
+            this.filter_supplier = supplier;
+        },
+        getProductsByCategory(id){
+            this.filter_category = id;
         },
         openDialog(item){
             this.dialog = true;
