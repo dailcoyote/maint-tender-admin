@@ -2,7 +2,7 @@
   <div class="new_supplier-page">
     <div class="new_supplier">
       <v-navigation v-bind:name="title" allowBack></v-navigation>
-      <div class="new_supplier-content content">
+      <div class="new_supplier-content content" ref="formContainer">
         <form @submit.prevent="addNewSupplier" class="new_form">
           <div class="new_form-input">
             <label>Поставщик (название организации)</label>
@@ -61,7 +61,7 @@ export default {
   created() {
     if (this.$route.params.hasOwnProperty("id")) {
       this.id = this.$route.params["id"];
-      this.loadSupplier();
+      this.getCurrentSupplier();
     }
   },
   methods: {
@@ -86,7 +86,13 @@ export default {
       formData.append("file", this.file_data);
       return formData;
     },
-    async loadSupplier() {
+    showLoadingOverlay() {
+      return this.$loading.show({
+        container: this.$refs.formContainer,
+        canCancel: true
+      })
+    },
+    async getCurrentSupplier() {
       try {
         const response = await SuppliersServices.getOneSupplier(this.id);
         const supplier = response.data || {};
@@ -99,9 +105,10 @@ export default {
       }
     },
     async addNewSupplier() {
+      let response = null;
+      let formData = this.createFormData();
+      let loader = this.showLoadingOverlay();
       try {
-        let response = null;
-        let formData = this.createFormData();
         if (!this.id && this.action === "NEW") {
           response = await SuppliersServices.addSupplier(formData, {
             headers: {
@@ -119,6 +126,8 @@ export default {
         this.$router.push("/suppliers");
       } catch (err) {
         this.$swal(httpErrorHandler(err));
+      } finally {
+        loader.hide();
       }
     }
   }

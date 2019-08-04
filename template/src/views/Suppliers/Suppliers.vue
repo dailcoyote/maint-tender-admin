@@ -150,8 +150,6 @@ export default {
         },
         editSupplier(item){
             this.$router.push(`/supplier/edit/${item._id}`) ;
-        },
-        getSupplier(){
         }
     }
 }
