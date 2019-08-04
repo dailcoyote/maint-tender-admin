@@ -9,7 +9,7 @@
                     type="text"
                     v-model="search_text" 
                     placeholder="Поиск"
-                    @change="search">
+                    @input="search">
             </div>
         </div>
         <div class="filter-item" v-if="isSuppliers">
@@ -18,8 +18,8 @@
                 <option 
                     v-for="(item, i) in suppliers"
                     :key="i"
-                    :value="item.value">
-                    {{item.title}}
+                    :value="item._id">
+                    {{item.name}}
                 </option>
             </select>
         </div>
@@ -30,7 +30,7 @@
                     v-for="(item, i) in managers"
                     :key="i"
                     :value="item.value">
-                    {{item.title}}
+                    {{item.name}}
                 </option>
             </select>
         </div>
@@ -40,7 +40,7 @@
                 <option 
                     v-for="(item, i) in categories"
                     :key="i"
-                    :value="item.value">
+                    :value="item._id">
                     {{item.title}}
                 </option>
             </select>
