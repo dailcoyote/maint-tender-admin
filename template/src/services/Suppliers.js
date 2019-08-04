@@ -1,6 +1,9 @@
 import Api from '@/services/Api'
 
 export default {
+    getOneSupplier(id) {
+        return Api().get(`suppliers/${id}`);
+    },
     getSuppliers() {
         return Api().get(`suppliers`);
     },
@@ -10,7 +13,7 @@ export default {
     addSupplier(payload, config) {
         return Api().post(`suppliers/upload`, payload, config);
     },
-    updateSupplier(payload) {
-        return Api().put(`suppliers/upload/${payload._id}`, payload);
+    updateSupplier(id, payload, config) {
+        return Api().put(`suppliers/upload/${id}`, payload, config);
     }
 }

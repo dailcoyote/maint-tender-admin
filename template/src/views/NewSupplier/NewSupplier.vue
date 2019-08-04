@@ -48,19 +48,27 @@ export default {
   },
   data() {
     return {
+      id: "",
       name: "",
       legal_address: "",
       manager_name: "",
       manager_phone: "",
-      price_list: "",
       file_name: "Выберите файл",
       file_data: ""
     };
   },
+  created() {
+    if (this.$route.params.hasOwnProperty("id")) {
+      this.id = this.$route.params["id"];
+      this.loadSupplier();
+    }
+  },
   methods: {
     fileChange(e) {
-        console.log(e.target.files)
-      this.file_name = e.target.files.length ? e.target.files[0].name : this.file_name;
+      console.log(e.target.files);
+      this.file_name = e.target.files.length
+        ? e.target.files[0].name
+        : this.file_name;
       this.file_data = e.target.files.length ? e.target.files[0] : "";
     },
     deleteFile() {
@@ -68,19 +76,44 @@ export default {
       this.file_data = "";
       return false;
     },
+    createFormData() {
+      let formData = new FormData();
+      formData.append("name", this.name);
+      formData.append("legal_address", this.legal_address);
+      formData.append("manager_name", this.manager_name);
+      formData.append("manager_phone", this.manager_phone);
+      formData.append("file", this.file_data);
+      return formData;
+    },
+    async loadSupplier() {
+      try {
+        const response = await SuppliersServices.getOneSupplier(this.id);
+        const supplier = response.data || {};
+        this.name = supplier.name || "";
+        this.legal_address = supplier.legal_address || "";
+        this.manager_name = supplier.manager_name || "";
+        this.manager_phone = supplier.manager_phone || "";
+      } catch (err) {
+        this.$swal(httpErrorHandler(err));
+      }
+    },
     async addNewSupplier() {
       try {
-        let formData = new FormData();
-        formData.append("name", this.name);
-        formData.append("legal_address", this.legal_address);
-        formData.append("manager_name", this.manager_name);
-        formData.append("manager_phone", this.manager_phone);
-        formData.append("file", this.file_data);
-        let response = await SuppliersServices.addSupplier(formData, {
-          headers: {
-            "content-type": "multipart/form-data"
-          }
-        });
+        let response = null;
+        let formData = this.createFormData();
+        if (!this.id && this.action === "NEW") {
+          response = await SuppliersServices.addSupplier(formData, {
+            headers: {
+              "content-type": "multipart/form-data"
+            }
+          });
+        } else {
+          response = await SuppliersServices.updateSupplier(this.id, formData, {
+            headers: {
+              "content-type": "multipart/form-data"
+            }
+          });
+        }
         console.log(response);
         this.$router.push("/suppliers");
       } catch (err) {

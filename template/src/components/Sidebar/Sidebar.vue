@@ -42,22 +42,22 @@ export default {
             menu_links: [
                 {
                     title: "Поставщики",
-                    link: "suppliers",
+                    link: "/suppliers",
                     access: "ADMIN^SUPPLIERS"
                 },
                 {
                     title: "Товары",
-                    link: "products",
+                    link: "/products",
                     access: "ADMIN^PRODUCTS"
                 },
                 {
                     title: "Сотрудники",
-                    link: "managers",
+                    link: "/managers",
                     access: "ADMIN^USERS"
                 },
                 {
                     title: "История",
-                    link: "history",
+                    link: "/history",
                     access: "ADMIN^USERS"
                 },
             ],

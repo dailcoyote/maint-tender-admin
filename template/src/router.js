@@ -28,7 +28,17 @@ const router = new Router({
             path: "/new_supplier",
             name: "new_supplier",
             component: () => import("./views/NewSupplier/NewSupplier.vue"),
-            props: { default: true },
+            props: { default: true, action: "NEW" },
+            meta: {
+                requaresAuth: true,
+                access: "ADMIN^SUPPLIERS"
+            }
+        },
+        {
+            path: "/supplier/:id",
+            name: "supplier_form",
+            component: () => import("./views/NewSupplier/NewSupplier.vue"),
+            props: { default: true, action: "UPDATE" },
             meta: {
                 requaresAuth: true,
                 access: "ADMIN^SUPPLIERS"

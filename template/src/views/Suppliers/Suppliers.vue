@@ -32,6 +32,7 @@
                         :data="data"
                         actions
                         deleted
+                        @edit="editSupplier"
                         @delete="deleteSupplier">
                     </v-table>
                 </div>
@@ -105,8 +106,10 @@ export default {
                 this.$swal(httpErrorHandler(err));
             }
         },
+        editSupplier(item){
+            this.$router.push(`/supplier/${item._id}`) ;
+        },
         getSupplier(){
-            console.log("get")
         }
     }
 }
