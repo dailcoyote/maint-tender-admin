@@ -15,7 +15,6 @@ export default {
         filterData(){
             let filter_data = this.data;
             if(!this.filter_supplier && !this.filter_category && !this.search_text){
-                console.log("emty")
                 return filter_data;
             }else{
                 if(this.search_text){
