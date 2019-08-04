@@ -25,16 +25,16 @@
                     <v-dialog 
                         v-if="dialog"
                         @close="closeDialog">
-                        <form @submit.prevent="" class="products_form">
+                        <form @submit.prevent="updateProduct" class="products_form">
                             <div class="products_form-col">
                                 <div class="products_form-item">
-                                    Товар: {{current_product.product}}
+                                    Товар: {{currentProduct.name}}
                                 </div>
                                 <div class="products_form-item">
-                                    Модель: {{current_product.model}}
+                                    Модель: {{currentProduct.model}}
                                 </div>
                                 <div class="products_form-item">
-                                    Категория: {{current_product.category}}
+                                    Категория: {{currentProduct.category}}
                                 </div>
                             </div>
                             <div class="products_form-col">
@@ -45,23 +45,35 @@
                                             <label>
                                                 KZT: 
                                             </label>
-                                            <input type="text" v-model="current_product.prices.kzt">
+                                            <input 
+                                                type="text" 
+                                                v-model="currentProduct.prices.kzt"
+                                                @change="exchangeRates"
+                                                required>
                                         </div>
                                         <div class="products_form-input">
                                             <label>
                                                 РУБ: 
                                             </label>
-                                            <input type="text" v-model="current_product.prices.rub">
+                                            <input 
+                                                type="text" 
+                                                v-model="currentProduct.prices.rub"
+                                                required>
                                         </div>
                                         <div class="products_form-input">
                                             <label>
                                                 USD: 
                                             </label>
-                                            <input type="text" v-model="current_product.prices.usd">
+                                            <input 
+                                                type="text" 
+                                                v-model="currentProduct.prices.usd"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="save">Сохранить</button>
+                                <button class="save">
+                                    Сохранить
+                                </button>
                             </div>
                         </form>
                     </v-dialog>
@@ -79,7 +91,7 @@ export default {
     data(){
         return{
             dialog: false,
-            current_product: {},
+            current_product: null,
             suppliers: [],
             categories: [],
             headers: [
@@ -118,7 +130,8 @@ export default {
             ],
             data: [],
             filter_supplier: null,
-            filter_category: null
+            filter_category: null,
+            search_text: null
         }
     },
     created(){
@@ -128,9 +141,16 @@ export default {
     },
     computed: {
         filterData(){
-            if(!this.filter_supplier && !this.filter_category){
+            if(!this.filter_supplier && !this.filter_category && !this.search_text){
                 return this.data;
             }else{
+                if(this.search_text){
+                    return this.data.filter(el => {
+                        if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1){
+                            return el;
+                        }
+                    });
+                }
                 if(this.filter_supplier && this.filter_category){
                     return this.data.filter(el => {
                         return el.supplierID == this.filter_supplier && el.categoryID == this.filter_category;
@@ -144,21 +164,15 @@ export default {
                         return el.categoryID == this.filter_category;
                     });
                 }
-                
             }
+        },
+        currentProduct(){
+            return this.current_product;
         }
     },
     methods: {
         search(search_text){
-            // if(this.searchStudent === ''){
-            //     return this.students;
-            // }else{
-            //     return this.students.filter(item => {
-            //         if(item.name.toLowerCase().indexOf(this.searchStudent.toLowerCase()) !== -1){
-            //             return item;
-            //         }
-            //     });
-            // }
+            this.search_text = search_text;
         },
         async getCategories(){
             try{
@@ -170,6 +184,7 @@ export default {
         },
         async getSuppliers(){
             try{
+                this.suppliers = [];
                 let response = await SuppliersServices.getSuppliers();
                 this.suppliers = response.data;
             }catch(err){
@@ -178,9 +193,11 @@ export default {
         },
         async getProducts(){
             try{
+                this.data = [];
                 let response = await ProductsServices.getProducts();
                 response.data.forEach(el => {
                     this.data.push({
+                        _id: el._id,
                         name: el.name,
                         model: el.model,
                         category: el.category.title,
@@ -194,6 +211,36 @@ export default {
                     })
                 });
             }catch(err){
+                console.log(err.response);
+            }
+        },
+        async updateProduct(){
+            try{
+                let response = await ProductsServices.updateProduct(this.current_product, {
+                    headers: { 
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                });
+                if(response.data.message){
+                    this.getProducts();
+                    this.dialog = false;
+                }
+            }catch(err){ 
+                console.log(err.response);
+                if(err.response.data.message){
+                    alert("Проверьте данные!")
+                }
+            }
+        },
+        async exchangeRates(){
+            try{
+                if(this.current_product){
+                    let response = await ProductsServices.exchangeRates(this.current_product.prices.kzt);
+                    const rates = response.data;
+                    this.current_product.prices.usd = rates.USD;
+                    this.current_product.prices.rub = rates.RUB;
+                }
+            }catch(err){
                 console.log(err);
             }
         },
@@ -205,11 +252,21 @@ export default {
         },
         openDialog(item){
             this.dialog = true;
-            this.current_product = Object.assign({}, item);
+            this.current_product = {
+                _id: item._id,
+                name: item.name,
+                model: item.model,
+                category: item.category,
+                prices: {
+                    kzt: item.prices.kzt,
+                    rub: item.prices.rub,
+                    usd: item.prices.usd,
+                }
+            }
         },
         closeDialog(){
             this.dialog = false;
-            this.current_product = {};
+            this.current_product = null;
         }
     }
 }

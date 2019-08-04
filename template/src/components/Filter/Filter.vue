@@ -9,7 +9,7 @@
                     type="text"
                     v-model="search_text" 
                     placeholder="Поиск"
-                    @change="search">
+                    @input="search">
             </div>
         </div>
         <div class="filter-item" v-if="isSuppliers">

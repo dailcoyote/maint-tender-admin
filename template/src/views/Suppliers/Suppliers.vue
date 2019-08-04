@@ -77,9 +77,11 @@ export default {
         },
         async getSuppliers(){
             try{
+                this.data = [];
                 let response = await SuppliersServices.getSuppliers();
                 response.data.forEach(el => {
                     this.data.push({
+                        _id: el._id,
                         name: el.name,
                         legal_address: el.legal_address,
                         manager_phone: el.manager_phone,
