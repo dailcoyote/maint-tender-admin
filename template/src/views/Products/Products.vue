@@ -146,7 +146,8 @@ export default {
             }else{
                 if(this.search_text){
                     return this.data.filter(el => {
-                        if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1){
+                        if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1
+                        || (el.model && el.model.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1)) {
                             return el;
                         }
                     });

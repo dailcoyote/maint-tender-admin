@@ -23,13 +23,13 @@
                         :suppliers="suppliers"
                         :quantity="data.length"
                         @search="search"
-                        @get_supplier="getSupplier">
+                        @get_supplier="getSupplierById">
                     </v-filter>
                 </div>
                 <div class="suppliers-table">
                     <v-table 
                         :headers="headers" 
-                        :data="data"
+                        :data="filterData"
                         actions
                         deleted
                         @edit="editSupplier"
@@ -67,17 +67,56 @@ export default {
                     value: "created"
                 },
             ],
-            data: []
+            data: [],
+            filter_supplier: null,
+            search_text: null
         }
     },
     created(){
         this.getSuppliers();
+        this.getSuppliersDataset();
+    },
+    computed: {
+        filterData(){
+            if(!this.search_text && !this.filter_supplier){
+                return this.data;
+            }
+            if(this.search_text && !this.filter_supplier){
+                return this.data.filter(el => {
+                    if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1){
+                        return el;
+                    }
+                });
+            }
+            else if(!this.search_text && this.filter_supplier) {
+                return this.data.filter(el => {
+                    return el._id == this.filter_supplier;
+                });
+            }
+            else {
+                return this.data.filter(el => {
+                    if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1
+                     && el._id == this.filter_supplier){
+                        return el;
+                    }
+                });
+            }
+        }
     },
     methods: {
         search(search_text){
-            console.log(search_text);
+            this.search_text = search_text;
         },
         async getSuppliers(){
+            try{
+                this.suppliers = [];
+                let response = await SuppliersServices.getSuppliers();
+                this.suppliers = response.data;
+            }catch(err){
+                console.log(err);
+            }
+        },
+        async getSuppliersDataset(){
             try{
                 this.data = [];
                 let response = await SuppliersServices.getSuppliers();
@@ -105,6 +144,9 @@ export default {
                 console.log(err);
                 this.$swal(httpErrorHandler(err));
             }
+        },
+        getSupplierById(supplier){
+            this.filter_supplier = supplier;
         },
         editSupplier(item){
             this.$router.push(`/supplier/${item._id}`) ;
