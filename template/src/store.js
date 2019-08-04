@@ -8,7 +8,9 @@ export default new Vuex.Store({
 	state: {
 		user: null,
         token: null,
-        tokenEXP: null
+		tokenEXP: null,
+		current_supplier: null,
+		action: null
 	},
 	plugins: [createPersistedState()],
 	mutations: {
@@ -28,7 +30,13 @@ export default new Vuex.Store({
             state.user = null;
             state.token = null;
             state.tokenEXP = null;
-        }
+		},
+		setCurrentSupplier(state, supplier){
+			state.current_supplier = supplier;
+		},
+		setAction(state, action){
+			state.action = action
+		}
 	},
 	actions: {
 		login({ commit }, payload){

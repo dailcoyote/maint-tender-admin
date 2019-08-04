@@ -40,8 +40,8 @@ export default {
         },
     },
     created(){
-        this.getCategories();
-        this.getSuppliers();
+        this.getFilterCategories();
+        this.getFilterSuppliers();
     },
     methods: {
         search(search_text){
@@ -53,7 +53,7 @@ export default {
         getDataByCategory(id){
             this.filter_category = id;
         },
-        async getCategories(){
+        async getFilterCategories(){
             try{
                 let response = await FilterServices.getCategories();
                 this.categories = response.data;
@@ -61,7 +61,7 @@ export default {
                 console.log(err);
             }
         },
-        async getSuppliers(){
+        async getFilterSuppliers(){
             try{
                 this.suppliers = [];
                 let response = await SuppliersServices.getSuppliers();

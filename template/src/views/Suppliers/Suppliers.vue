@@ -6,7 +6,7 @@
                 <template #actions>
                     <button 
                         class="suppliers_add-button" 
-                        @click="$router.push('/new_supplier')">
+                        @click="addSupplier">
                         <i class="material-icons">
                             add
                         </i>
@@ -21,18 +21,19 @@
                     <v-filter 
                         isSuppliers
                         :suppliers="suppliers"
-                        :quantity="data.length"
+                        :quantity="filterData.length"
                         @search="search"
-                        @get_supplier="getSupplier">
+                        @get_supplier="getDataBySupplier">
                     </v-filter>
                 </div>
                 <div class="suppliers-table">
                     <v-table 
                         :headers="headers" 
-                        :data="data"
+                        :data="filterData"
                         actions
                         deleted
-                        @delete="deleteSupplier">
+                        @delete="deleteSupplier"
+                        @edit="editSupplier">
                     </v-table>
                 </div>
             </div>
@@ -42,11 +43,11 @@
 <script>
 import "./suppliers.scss"
 import SuppliersServices from "@/services/Suppliers"
-import FilterServices from "@/services/Filter"
+import FilterMixin from "@/mixins/Filter"
 export default {
+    mixins: [FilterMixin],
     data(){
         return{
-            suppliers: [],
             headers: [
                 {
                     title: "Название компании",
@@ -72,21 +73,25 @@ export default {
         this.getSuppliers();
     },
     methods: {
-        search(search_text){
-            console.log(search_text);
-        },
         async getSuppliers(){
             try{
                 this.data = [];
                 let response = await SuppliersServices.getSuppliers();
                 response.data.forEach(el => {
                     this.data.push({
-                        _id: el._id,
-                        name: el.name,
-                        legal_address: el.legal_address,
-                        manager_phone: el.manager_phone,
+                        ...el,
+                        supplierID: el._id,
                         created: el.created_at.split('T')[0]
-                    })
+                    });
+                });
+                this.data.sort((a, b) => {
+                    if (a.created_at > b.created_at) {
+                        return -1;
+                    }
+                    if (a.created_at < b.created_at) {
+                        return 1;
+                    }
+                    return 0;
                 });
             }catch(err){
                 console.log(err);
@@ -103,8 +108,15 @@ export default {
                 console.log(err);
             }
         },
-        getSupplier(){
-            console.log("get")
+        addSupplier(){
+            this.$store.commit('setCurrentSupplier', null);
+            this.$store.commit('setAction', 'new');
+            this.$router.push('/new_supplier');
+        },
+        editSupplier(item){
+            this.$store.commit('setCurrentSupplier', item);
+            this.$store.commit('setAction', 'edit');
+            this.$router.push('/new_supplier');
         }
     }
 }

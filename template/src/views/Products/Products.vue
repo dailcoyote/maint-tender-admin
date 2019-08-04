@@ -154,6 +154,7 @@ export default {
                         legal_address: el.supplier.legal_address,
                         manager_phone: el.supplier.manager_phone,
                         prices: el.price,
+                        created_at: el.created_at,
                         created: el.created_at.split('T')[0]
                     })
                 });

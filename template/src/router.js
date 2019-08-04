@@ -28,7 +28,6 @@ const router = new Router({
             path: "/new_supplier",
             name: "new_supplier",
             component: () => import("./views/NewSupplier/NewSupplier.vue"),
-            props: { default: true },
             meta: {
                 requaresAuth: true,
                 access: "ADMIN^SUPPLIERS"
