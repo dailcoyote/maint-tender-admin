@@ -15,6 +15,14 @@ npm run serve
 npm run build
 ```
 
+### Run the finished assembly 
+```
+npm install -g serve
+# -s flag means serve it in Single-Page Application mode
+# which deals with the routing problem below
+serve -s dist
+```
+
 ### Run your tests
 ```
 npm run test
