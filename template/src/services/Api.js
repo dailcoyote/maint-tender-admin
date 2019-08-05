@@ -2,8 +2,9 @@ import axios from 'axios';
 import store from '@/store';
 
 export default () => {
+	const serverURL = process.env.VUE_APP_ROOT_API;
 	return axios.create({
-		baseURL: `http://localhost:3434/api/`,
+		baseURL: `${serverURL}/api/`,
 		headers: {
 			Authorization: `Bearer ${store.state.token}`,
 		},

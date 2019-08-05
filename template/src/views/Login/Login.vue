@@ -31,8 +31,10 @@ import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
     data(){
         return{
-            username: "admin@maint.kz",
-            password: "maint1234",
+            username: process.env.VUE_APP_MODE === "development" 
+                    ? process.env.VUE_APP_ADMIN_EMAIL : "",
+            password: process.env.VUE_APP_MODE === "development" 
+                    ? process.env.VUE_APP_ADMIN_PASSWORD : "",
             isLoading: false,
         }
     },
