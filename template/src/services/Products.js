@@ -16,5 +16,8 @@ export default {
     },
     exchangeRates(price){
         return Api().get(`exchange-rates?kzt=${price}`);
+    },
+    getCurrentExchRates(){
+        return Api().get(`exchange-rates`);
     }
 }

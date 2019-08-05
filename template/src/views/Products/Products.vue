@@ -48,7 +48,7 @@
                                             <input 
                                                 type="text" 
                                                 v-model="currentProduct.prices.kzt"
-                                                @change="exchangeRates"
+                                                @input="calcExchRates"
                                                 required>
                                         </div>
                                         <div class="products_form-input">
@@ -128,10 +128,16 @@ export default {
                 },
             ],
             data: [],
+            currentExchangeRates: {
+                active: true,
+                usd: 0,
+                rub: 0
+            }
         }
     },
     created(){
         this.getProducts();
+        this.loadCurrentExchRates();
     },
     computed: {
         currentProduct(){
@@ -185,16 +191,29 @@ export default {
                 this.$swal(httpErrorHandler(err));
             }
         },
-        async exchangeRates(){
-            try{
-                if(this.current_product){
-                    let response = await ProductsServices.exchangeRates(this.current_product.prices.kzt);
-                    const rates = response.data;
-                    this.current_product.prices.usd = rates.USD;
-                    this.current_product.prices.rub = rates.RUB;
-                }
-            }catch(err){
-                console.log(err);
+        async loadCurrentExchRates(){
+            try {
+                let response = await ProductsServices.getCurrentExchRates();
+                const rates = response.data;
+                this.currentExchangeRates.active = true;
+                this.currentExchangeRates.usd = rates.USD;
+                this.currentExchangeRates.rub = rates.RUB;                
+            } catch (err) {
+                this.currentExchangeRates.active = false;
+                this.$swal(httpErrorHandler("Отсутствует связь с сервисом Нац.Банка! Операции расчета по курсам валют выключены!"));
+            }
+        },
+        calcExchRates() {
+            if(!this.current_product) return;
+            if(isNaN(this.current_product.prices.kzt)) {
+                this.current_product.prices.usd = "ОШИБКА";
+                this.current_product.prices.rub = "ОШИБКА";
+            }
+            else if(this.currentExchangeRates.active) {
+                this.current_product.prices.usd = 
+                    parseFloat((this.current_product.prices.kzt/this.currentExchangeRates.usd).toFixed(2));
+                this.current_product.prices.rub = 
+                    parseFloat((this.current_product.prices.kzt/this.currentExchangeRates.rub).toFixed(2));
             }
         },
         showLoadingOverlay() {
