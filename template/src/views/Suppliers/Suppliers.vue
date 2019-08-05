@@ -21,9 +21,9 @@
                     <v-filter 
                         isSuppliers
                         :suppliers="suppliers"
-                        :quantity="data.length"
+                        :quantity="filterData.length"
                         @search="search"
-                        @get_supplier="getSupplierById">
+                        @get_supplier="getDataBySupplier">
                     </v-filter>
                 </div>
                 <div class="suppliers-table">
@@ -42,20 +42,20 @@
     </div>
 </template>
 <script>
-import "./suppliers.scss"
 import { mapState } from 'vuex'
 import moment from "moment";
+import FilterMixin from "@/mixins/Filter"
 import VNotification from "@/components/Notification/Notification"
 import SuppliersServices from "@/services/Suppliers"
 import FilterServices from "@/services/Filter"
 import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
+    mixins: [FilterMixin],
     components: {
         VNotification
     },
     data(){
         return{
-            suppliers: [],
             headers: [
                 {
                     title: "Название компании",
@@ -139,8 +139,7 @@ export default {
                 this.data = [];
                 let response = await SuppliersServices.getSuppliers();
                 response.data.forEach(el => {
-                    let timeZone = moment.tz.guess();
-                    let time = moment(el.created_at).tz(timeZone).format("DD.MM.YYYY HH:MM")
+                    let time = moment(el.created_at).format("DD.MM.YYYY HH:mm")
                     this.data.push({
                         _id: el._id,
                         name: el.name,

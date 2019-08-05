@@ -53,6 +53,7 @@ export default {
                 {
                     title: "Сотрудники",
                     link: "/managers",
+                    link: "users",
                     access: "ADMIN^USERS"
                 },
                 {

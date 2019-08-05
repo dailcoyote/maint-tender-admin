@@ -54,18 +54,18 @@ const router = new Router({
             }
         },
         {
-            path: "/managers",
-            name: "managers",
-            component: () => import("./views/Managers/Managers.vue"),
+            path: "/users",
+            name: "users",
+            component: () => import("./views/Users/Users.vue"),
             meta: {
                 requaresAuth: true,
                 access: "ADMIN^USERS"
             }
         },
         {
-            path: "/new_manager",
-            name: "new_manager",
-            component: () => import("./views/NewManager/NewManager.vue"),
+            path: "/new_user",
+            name: "new_user",
+            component: () => import("./views/NewUser/NewUser.vue"),
             meta: {
                 requaresAuth: true,
                 access: "ADMIN^USERS"

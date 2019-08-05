@@ -9,7 +9,9 @@ export default new Vuex.Store({
 		user: null,
         token: null,
 		tokenEXP: null,
-		notifications: []
+		notifications: [],
+		current_user: null,
+		action: null
 	},
 	plugins: [createPersistedState()],
 	mutations: {
@@ -37,6 +39,12 @@ export default new Vuex.Store({
 		},
 		notificationsRead(state) {
 			state.notifications = [];
+		},
+		setAction(state, action){
+			state.action = action
+		},
+		setCurrentUser(state, user){
+			state.current_user = user
 		}
 	},
 	actions: {

@@ -9,10 +9,10 @@
                         isProduct
                         :suppliers="suppliers"
                         :categories="categories"
-                        :quantity="data.length"
+                        :quantity="filterData.length"
                         @search="search"
-                        @get_supplier="getProductsBySupplier"
-                        @get_category="getProductsByCategory">
+                        @get_supplier="getDataBySupplier"
+                        @get_category="getDataByCategory">
                     </v-filter>
                 </div>
                 <div class="products-table">
@@ -84,16 +84,14 @@
 </template>
 <script>
 import "./products.scss"
-import FilterServices from "@/services/Filter"
-import SuppliersServices from "@/services/Suppliers"
 import ProductsServices from "@/services/Products"
+import FilterMixin from "@/mixins/Filter"
 export default {
+    mixins: [FilterMixin],
     data(){
         return{
             dialog: false,
             current_product: null,
-            suppliers: [],
-            categories: [],
             headers: [
                 {
                     title: "Товар",
@@ -129,9 +127,6 @@ export default {
                 },
             ],
             data: [],
-            filter_supplier: null,
-            filter_category: null,
-            search_text: null
         }
     },
     created(){
@@ -208,6 +203,7 @@ export default {
                         legal_address: el.supplier.legal_address,
                         manager_phone: el.supplier.manager_phone,
                         prices: el.price,
+                        created_at: el.created_at,
                         created: el.created_at.split('T')[0]
                     })
                 });
@@ -244,12 +240,6 @@ export default {
             }catch(err){
                 console.log(err);
             }
-        },
-        getProductsBySupplier(supplier){
-            this.filter_supplier = supplier;
-        },
-        getProductsByCategory(id){
-            this.filter_category = id;
         },
         openDialog(item){
             this.dialog = true;

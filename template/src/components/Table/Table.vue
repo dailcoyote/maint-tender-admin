@@ -37,7 +37,7 @@
                                 {{item.prices.usd}} $
                             </span>
                         </span>
-                        <span v-else-if="key.value == 'access'">
+                        <span v-else-if="key.value == 'access_controls'">
                             <span 
                                 v-for="(access, k) in item[key.value]"
                                 :key="k">
