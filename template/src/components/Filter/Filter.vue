@@ -24,7 +24,8 @@
             </select>
         </div>
         <div class="filter-item" v-if="isUsers">
-            <select v-model="users" @change="getUser">
+            <!-- //* Выключил  фильтр по сотрудникам -->
+            <select v-model="user" @change="getUser" disabled>
                 <option value="">Фильтр по сотрудникам</option>
                 <option 
                     v-for="(item, i) in users"

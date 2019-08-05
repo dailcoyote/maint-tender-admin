@@ -66,7 +66,9 @@ export default {
     computed: {
         ...mapState(['user']),
         filterLinks(){
-            if(this.user.adminControls[0] == "SUPER_ADMIN"){
+            if(!this.user) {
+                return [];
+            }else if(this.user.adminControls[0] == "SUPER_ADMIN"){
                 return this.menu_links;
             }else{
                 return this.menu_links.filter(el => {

@@ -54,7 +54,8 @@
                         <div class="table_actions">
                             <div 
                                 class="table_action" 
-                                @click="editItem(item)">
+                                @click="editItem(item)"
+                                v-if="!history">
                                 Редактировать
                             </div>
                             <div 
@@ -62,6 +63,12 @@
                                 class="table_action"
                                 @click="deleteItem(item)"> 
                                 Удалить
+                            </div>
+                            <div 
+                                v-if="history"
+                                class="table_action"
+                                @click="viewHistory(item)"> 
+                                Посмотреть историю
                             </div>
                         </div>
                     </td>
@@ -77,7 +84,8 @@ export default {
         headers: Array,
         data: Array,
         actions: Boolean,
-        deleted: Boolean
+        deleted: Boolean,
+        history: Boolean
     },
     methods: {
         editItem(item){
@@ -85,6 +93,9 @@ export default {
         },
         deleteItem(item){
             this.$emit("delete", item);
+        },
+        viewHistory(item){
+            this.$emit("view_history", item);
         }
     }
 }
