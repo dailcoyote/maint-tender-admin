@@ -5,7 +5,8 @@
             <div class="history-content content">
                 <div class="history-filter">
                     <v-filter 
-                        isUsers>
+                        isUsers
+                        :users="data">
                     </v-filter>
                 </div>
                 <div class="history-table">
@@ -13,7 +14,8 @@
                         :headers="headers" 
                         :data="data"
                         actions
-                        deleted>
+                        history
+                        @view_history="viewHistory">
                     </v-table>
                 </div>
             </div>
@@ -63,6 +65,9 @@ export default {
                 console.log(err.response)
             }
         },
+        viewHistory(item){
+            alert(`История ${item.fullname} не доступна!`)
+        }
     }
 }
 </script>

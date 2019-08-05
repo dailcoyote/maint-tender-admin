@@ -7,6 +7,7 @@ export default {
         return {
             filter_supplier: null,
             filter_category: null,
+            filter_user: null,
             search_text: null,
             suppliers: [],
             categories: [],
@@ -57,8 +58,8 @@ export default {
         getDataByCategory(id){
             this.filter_category = id;
         },
-        getDataByUsers(id){
-            console.log(id);
+        getDataByUser(id){
+            this.filter_user = id;
         },
         async getFilterCategories(){
             try{
@@ -82,7 +83,6 @@ export default {
                 this.users = [];
                 let response = await UserServices.getUsers();
                 this.users = response.data;
-                console.log(this.users);
             }catch(err){
                 console.log(err);
             }

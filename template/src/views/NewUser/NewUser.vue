@@ -36,21 +36,21 @@
                                 <input 
                                     type="checkbox" 
                                     v-model="access_controls" 
-                                    value="Самрук">
+                                    value="САМРУККАЗЫНА">
                                 Самрук Казына
                             </label>
                             <label>
                                 <input 
                                     type="checkbox" 
                                     v-model="access_controls" 
-                                    value="Реестр">
+                                    value="РЕЕСТР">
                                 Реестр.кз
                             </label>
                             <label>
                                 <input 
                                     type="checkbox" 
                                     v-model="access_controls" 
-                                    value="Госзакуп">
+                                    value="ГОСЗАКУП">
                                 Госзакуп
                             </label>
                         </div>
