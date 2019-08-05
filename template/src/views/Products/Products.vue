@@ -15,7 +15,7 @@
                         @get_category="getDataByCategory">
                     </v-filter>
                 </div>
-                <div class="products-table">
+                <div class="products-table" ref="dataContainer">
                     <v-table 
                         :headers="headers" 
                         :data="filterData"
@@ -140,6 +140,7 @@ export default {
     },
     methods: {
         async getProducts(){
+            let loader = this.showLoadingOverlay();
             try{
                 this.data = [];
                 let response = await ProductsServices.getProducts();
@@ -162,6 +163,9 @@ export default {
             }catch(err){
                 this.$swal(httpErrorHandler(err));
             }
+            finally {
+                loader.hide();
+            }
         },
         async updateProduct(){
             try{
@@ -171,8 +175,11 @@ export default {
                     }
                 });
                 if(response.data.message){
-                    this.getProducts();
                     this.dialog = false;
+                    this.getProducts();
+                    setTimeout(()=>{
+                        this.$swal(response.data.message, '', 'success');
+                    }, 100)
                 }
             }catch(err){ 
                 this.$swal(httpErrorHandler(err));
@@ -189,6 +196,12 @@ export default {
             }catch(err){
                 console.log(err);
             }
+        },
+        showLoadingOverlay() {
+            return this.$loading.show({
+                container: this.$refs.dataContainer,
+                canCancel: true
+            })
         },
         openDialog(item){
             this.dialog = true;

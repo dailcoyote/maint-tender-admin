@@ -26,7 +26,7 @@
                         @get_supplier="getDataBySupplier">
                     </v-filter>
                 </div>
-                <div class="suppliers-table">
+                <div class="suppliers-table" ref="dataContainer">
                     <v-table 
                         :headers="headers" 
                         :data="filterData"
@@ -115,7 +115,14 @@ export default {
         onNotify(){
             this.$store.commit('notificationsRead');
         },
+        showLoadingOverlay() {
+            return this.$loading.show({
+                container: this.$refs.dataContainer,
+                canCancel: true
+            })
+        },
         async getSuppliers(){
+            let loader = this.showLoadingOverlay();
             try{
                 this.data = [];
                 let response = await SuppliersServices.getSuppliers();
@@ -132,12 +139,15 @@ export default {
             }catch(err){
                 this.$swal(httpErrorHandler(err));
             }
+            finally {
+                loader.hide();
+            }
         },
         async deleteSupplier(item){
             try{
                 let response = await SuppliersServices.deleteSupplier(item._id);
                 if(response.data.message){
-                    this.$store.commit("pushNotification", response.data.message);
+                    this.$swal(response.data.message, '', 'success');
                     this.getSuppliers();
                 }
             }catch(err){

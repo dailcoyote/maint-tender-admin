@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     fileChange(e) {
-      console.log(e.target.files);
       this.file_name = e.target.files.length
         ? e.target.files[0].name
         : this.file_name;
