@@ -136,14 +136,14 @@ export default {
             }
         }
     },
-    created(){
-        this.getProducts();
-        this.loadCurrentExchRates();
-    },
     computed: {
         currentProduct(){
             return this.current_product;
         }
+    },
+    created(){
+        this.getProducts();
+        this.loadCurrentExchRates();
     },
     methods: {
         async getProducts(){

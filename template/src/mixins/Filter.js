@@ -42,6 +42,32 @@ export default {
                 return filter_data;
             }
         },
+        filteredSuppliers(){
+            let filter_data = this.data;
+            if(!this.search_text && !this.filter_supplier){
+                return filter_data;
+            }
+            if(this.search_text && !this.filter_supplier){
+                return filter_data.filter(el => {
+                    if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1){
+                        return el;
+                    }
+                });
+            }
+            else if(!this.search_text && this.filter_supplier) {
+                return filter_data.filter(el => {
+                    return el._id == this.filter_supplier;
+                });
+            }
+            else {
+                return filter_data.filter(el => {
+                    if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1
+                        && el._id == this.filter_supplier){
+                        return el;
+                    }
+                });
+            }
+        }
     },
     created(){
         this.getFilterCategories();
