@@ -84,6 +84,7 @@
 </template>
 <script>
 import "./products.scss"
+import moment from "moment";
 import ProductsServices from "@/services/Products"
 import httpErrorHandler from "@/handlers/httpErrorHandler"
 import FilterMixin from "@/mixins/Filter"
@@ -151,6 +152,7 @@ export default {
                 this.data = [];
                 let response = await ProductsServices.getProducts();
                 response.data.forEach(el => {
+                    let time = moment(el.created_at).format("DD.MM.YYYY HH:mm")
                     this.data.push({
                         _id: el._id,
                         name: el.name,
@@ -163,7 +165,7 @@ export default {
                         manager_phone: el.supplier.manager_phone,
                         prices: el.price,
                         created_at: el.created_at,
-                        created: el.created_at.split('T')[0]
+                        created: time
                     })
                 });
             }catch(err){
