@@ -27,14 +27,21 @@
                     </v-table>
                 </div>
             </div>
+            <v-notification v-bind:list="notifications" @on_notification_shown="onNotify"></v-notification>
         </div>
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import FilterMixin from "@/mixins/Filter"
+import VNotification from "@/components/Notification/Notification"
 import UserServices from "@/services/User"
+import httpErrorHandler from "@/handlers/httpErrorHandler";
 export default {
     mixins: [FilterMixin],
+    components: {
+        VNotification
+    },
     data(){
         return{
             headers: [
@@ -54,15 +61,27 @@ export default {
             data: []
         }
     },
+    computed: {
+        ...mapState(['notifications']),
+    },
     created(){
         this.getUsers();
     },
     methods: {
+        onNotify(){
+            this.$store.commit('notificationsRead');
+        },
+        showLoadingOverlay() {
+            return this.$loading.show({
+                container: this.$refs.dataContainer,
+                canCancel: true
+            })
+        },
         async getUsers(){
+            let loader = this.showLoadingOverlay();
             try{
                 let response = await UserServices.getUsers();
                 this.data = response.data;
-                console.log(response.data)
                 this.data.sort((a, b) => {
                     if(a.fullname.toLowerCase() > b.fullname.toLowerCase()){
                         return 1;
@@ -72,18 +91,20 @@ export default {
                     return 0;
                 });
             }catch(err){
-                console.log(err.response)
+                this.$swal(httpErrorHandler(err));
+            }finally {
+                loader.hide();
             }
         },
         async deleteUser(item){
             try{
                 let response = await UserServices.deleteUser(item._id);
                 if(response.data.message){
-                    alert(response.data.message);
+                    this.$swal(response.data.message, '', 'success');
                     this.getUsers();
                 }
             }catch(err){
-                console.log(err);
+                this.$swal(httpErrorHandler(err));
             }
         },
         addUser(){

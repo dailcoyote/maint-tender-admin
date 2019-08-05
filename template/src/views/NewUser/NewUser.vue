@@ -2,7 +2,7 @@
     <div class="new_manager-page">
         <div class="new_manager">
             <v-navigation :name="navigation_title" allowBack></v-navigation>
-            <div class="new_manager-content content">
+            <div class="new_manager-content content" ref="formContainer">
                 <form @submit.prevent="addNewUser" class="new_form">
                     <div class="new_form-input">
                         <label>ФИО</label>
@@ -70,6 +70,7 @@
 <script>
 import { mapState } from 'vuex'
 import UserServices from "@/services/User"
+import httpErrorHandler from "@/handlers/httpErrorHandler"
 export default {
     data(){
         return{
@@ -101,7 +102,14 @@ export default {
                 this.access_controls = this.current_user.access_controls;
             }
         },
+        showLoadingOverlay() {
+            return this.$loading.show({
+                container: this.$refs.formContainer,
+                canCancel: true
+            })
+        },
         async addNewUser(){
+            let loader = this.showLoadingOverlay();
             try{
                 let data = {
                     fullname: this.fullname,
@@ -112,15 +120,13 @@ export default {
                 if(this.current_user){
                     data._id = this.current_user._id;
                 }
-                console.log(data);
                 let response = await UserServices.addUser(data);
-                console.log(response);
+                this.$store.commit("pushNotification", response.data.message);
                 this.$router.push("/users");
             }catch(err){
-                console.log(err.response);
-                if(err.response.data.message){
-                    alert(err.response.data.message)
-                }
+                this.$swal(httpErrorHandler(err));
+            }finally {
+                loader.hide();
             }
         },
     }
