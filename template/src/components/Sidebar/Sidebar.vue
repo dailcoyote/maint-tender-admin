@@ -54,12 +54,12 @@ export default {
                     title: "Сотрудники",
                     link: "/users",
                     access: "ADMIN^USERS"
-                },
-                {
-                    title: "История",
-                    link: "/history",
-                    access: "ADMIN^USERS"
-                },
+                }
+                // {
+                //     title: "История",
+                //     link: "/history",
+                //     access: "ADMIN^USERS"
+                // }
             ],
         }
     },
