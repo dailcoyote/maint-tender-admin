@@ -44,6 +44,7 @@
 <script>
 import "./suppliers.scss"
 import { mapState } from 'vuex'
+import moment from "moment";
 import VNotification from "@/components/Notification/Notification"
 import SuppliersServices from "@/services/Suppliers"
 import FilterServices from "@/services/Filter"
@@ -138,12 +139,14 @@ export default {
                 this.data = [];
                 let response = await SuppliersServices.getSuppliers();
                 response.data.forEach(el => {
+                    let timeZone = moment.tz.guess();
+                    let time = moment(el.created_at).tz(timeZone).format("DD.MM.YYYY HH:MM")
                     this.data.push({
                         _id: el._id,
                         name: el.name,
                         legal_address: el.legal_address,
                         manager_phone: el.manager_phone,
-                        created: el.created_at.split('T')[0]
+                        created: time
                     })
                 });
             }catch(err){
