@@ -108,33 +108,14 @@ export default {
         }
     },
     created(){
-        this.getSuppliersShortList();
-        this.getSuppliersDataset();
+        this.getSuppliers();
     },
     mounted() {},
     methods: {
         onNotify(){
             this.$store.commit('notificationsRead');
         },
-        search(search_text){
-            this.search_text = search_text;
-        },
-        getSupplierById(supplier){
-            this.filter_supplier = supplier;
-        },
-        editSupplier(item){
-            this.$router.push(`/supplier/edit/${item._id}`) ;
-        },
-        async getSuppliersShortList(){
-            try{
-                this.suppliers = [];
-                let response = await SuppliersServices.getSuppliersShortList();
-                this.suppliers = response.data;
-            }catch(err){
-                this.$swal(httpErrorHandler(err));
-            }
-        },
-        async getSuppliersDataset(){
+        async getSuppliers(){
             try{
                 this.data = [];
                 let response = await SuppliersServices.getSuppliers();
@@ -157,12 +138,14 @@ export default {
                 let response = await SuppliersServices.deleteSupplier(item._id);
                 if(response.data.message){
                     this.$store.commit("pushNotification", response.data.message);
-                    this.getSuppliersDataset();
+                    this.getSuppliers();
                 }
             }catch(err){
-                console.log(err);
                 this.$swal(httpErrorHandler(err));
             }
+        },
+        editSupplier(item){
+            this.$router.push(`/supplier/edit/${item._id}`) ;
         }
     }
 }

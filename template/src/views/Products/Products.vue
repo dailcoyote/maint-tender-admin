@@ -85,6 +85,7 @@
 <script>
 import "./products.scss"
 import ProductsServices from "@/services/Products"
+import httpErrorHandler from "@/handlers/httpErrorHandler"
 import FilterMixin from "@/mixins/Filter"
 export default {
     mixins: [FilterMixin],
@@ -130,63 +131,14 @@ export default {
         }
     },
     created(){
-        this.getCategories();
-        this.getSuppliersShortList();
         this.getProducts();
     },
     computed: {
-        filterData(){
-            if(!this.filter_supplier && !this.filter_category && !this.search_text){
-                return this.data;
-            }else{
-                if(this.search_text){
-                    return this.data.filter(el => {
-                        if(el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1
-                        || (el.model && el.model.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1)) {
-                            return el;
-                        }
-                    });
-                }
-                if(this.filter_supplier && this.filter_category){
-                    return this.data.filter(el => {
-                        return el.supplierID == this.filter_supplier && el.categoryID == this.filter_category;
-                    });
-                }else if(this.filter_supplier && !this.filter_category){
-                    return this.data.filter(el => {
-                        return el.supplierID == this.filter_supplier;
-                    });
-                }else{
-                    return this.data.filter(el => {
-                        return el.categoryID == this.filter_category;
-                    });
-                }
-            }
-        },
         currentProduct(){
             return this.current_product;
         }
     },
     methods: {
-        search(search_text){
-            this.search_text = search_text;
-        },
-        async getCategories(){
-            try{
-                let response = await FilterServices.getCategories();
-                this.categories = response.data;
-            }catch(err){
-                console.log(err);
-            }
-        },
-        async getSuppliersShortList(){
-            try{
-                this.suppliers = [];
-                let response = await SuppliersServices.getSuppliersShortList();
-                this.suppliers = response.data;
-            }catch(err){
-                console.log(err);
-            }
-        },
         async getProducts(){
             try{
                 this.data = [];
@@ -208,7 +160,7 @@ export default {
                     })
                 });
             }catch(err){
-                console.log(err.response);
+                this.$swal(httpErrorHandler(err));
             }
         },
         async updateProduct(){
@@ -223,10 +175,7 @@ export default {
                     this.dialog = false;
                 }
             }catch(err){ 
-                console.log(err.response);
-                if(err.response.data.message){
-                    alert("Проверьте данные!")
-                }
+                this.$swal(httpErrorHandler(err));
             }
         },
         async exchangeRates(){

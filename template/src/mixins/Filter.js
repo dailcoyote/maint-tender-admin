@@ -21,7 +21,8 @@ export default {
             }else{
                 if(this.search_text){
                     filter_data = filter_data.filter(el => {
-                        return el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1;
+                        return el.name.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1
+                        || el.model && el.model.toLowerCase().indexOf(this.search_text.toLowerCase()) !== -1
                     });
                 }
                 if(this.filter_supplier && this.filter_category){
@@ -70,7 +71,7 @@ export default {
         async getFilterSuppliers(){
             try{
                 this.suppliers = [];
-                let response = await SuppliersServices.getSuppliers();
+                let response = await SuppliersServices.getSuppliersShortList();
                 this.suppliers = response.data;
             }catch(err){
                 console.log(err);
