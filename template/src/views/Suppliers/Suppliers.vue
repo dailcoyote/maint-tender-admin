@@ -37,7 +37,7 @@
                     </v-table>
                 </div>
             </div>
-            <v-notification v-bind:list="notifications" v-bind:callback="onNotify"></v-notification>
+            <v-notification v-bind:list="notifications" @on_notification_shown="onNotify"></v-notification>
         </div>
     </div>
 </template>
@@ -110,8 +110,7 @@ export default {
         this.getSuppliersShortList();
         this.getSuppliersDataset();
     },
-    mounted() {
-        },
+    mounted() {},
     methods: {
         onNotify(){
             this.$store.commit('notificationsRead');
