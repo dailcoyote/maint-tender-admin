@@ -9,9 +9,10 @@
             <div class="sidebar_close-button">
                 <h1>Меню</h1>
                 <img 
-                    src="@/assets/close.svg" 
-                    alt="close"
-                    @click="close">
+                    src="@/assets/arrow_back.png" 
+                    alt="close" 
+                    @click="close"
+                >
             </div>
             <div class="sidebar_content-links">
                 <router-link
@@ -25,10 +26,14 @@
             <div 
                 class="sidebar_content-logout"
                 @click="logout">
-                Выйти
-                <i class="material-icons">
-                    input
-                </i>
+                <div>
+                    <img 
+                        src="@/assets/user.png" 
+                        alt="user">
+                    <span>
+                        Выход
+                    </span>
+                </div>
             </div>
         </div>
     </div>
@@ -40,6 +45,11 @@ export default {
     data(){
         return{
             menu_links: [
+                {
+                    title: "Настройки",
+                    link: "/settings",
+                    access: "ADMIN^SUPPLIERS"
+                }, 
                 {
                     title: "Поставщики",
                     link: "/suppliers",
@@ -55,11 +65,6 @@ export default {
                     link: "/users",
                     access: "ADMIN^USERS"
                 }
-                // {
-                //     title: "История",
-                //     link: "/history",
-                //     access: "ADMIN^USERS"
-                // }
             ],
         }
     },
