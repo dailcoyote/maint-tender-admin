@@ -40,12 +40,12 @@ export default {
             percent: "",
             links: [
                 {
-                    title: 'Поставщики',
-                    to: '/suppliers'
+                    title: 'Настройка',
+                    to: '/settings'
                 },
                 {
-                    title: 'Добавить поставщика',
-                    to: '/suppliers/new'
+                    title: 'Добавить настройки',
+                    to: '/settings/add'
                 }
             ]
         }
