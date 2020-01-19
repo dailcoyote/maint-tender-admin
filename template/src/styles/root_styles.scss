@@ -65,26 +65,38 @@ label {
 }
 
 .new_form{
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.30);
+    padding: 2rem;
+    border-radius: 5px;
+
     &-input{
-        margin-top: 1em;
+        margin-top: 1.5em;
+        &:first-child {
+            margin-top: 0;
+        }
         display: flex;
         label{
-            width: 300px;
+            width: 280px;
+            font-weight: bold;
         }
         input{
             width: 300px;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #9b9b9b;
+            padding: 7px;
+            border-radius: 7px;
+            border: 1px solid #b4b4b4;
         }
     }
     &-file{
         display: flex;
         flex-direction: column;
+        text-align: center;
         label{
+            width: 300px;
             padding: .5em;
             border-radius: 5px;
-            border: 1px solid #9b9b9b;
+            border: 1px solid #b4b4b4;
+            font-size: .9rem;
+            color: #0665d1;
         }
         input[type=file]{
             display: none;
@@ -92,11 +104,9 @@ label {
         button{
             @include input_reset();
             cursor: pointer;
-            width: fit-content;
-            margin-top: .5em;
+            margin-top: .7em;
             padding: .3em;
-            border: 1px solid #9b9b9b;
-            background: #928f8f;
+            border: 1px solid #ddd;
         }
     }
     &-access{
@@ -114,16 +124,20 @@ label {
         }
     }
     &-actions{
+        margin-top: 2rem;
         display: flex;
+        border-top: 1px solid #ddd;
         button{
-            margin-right: 1em;
+            margin-left: 280px;
             @include input_reset();
             cursor: pointer;
             margin-top: 1.5em;
-            padding: .5em 1em;
-            border-radius: 5px;
-            border: 1px solid #9b9b9b;
-            background: #FFFF66;
+            border-radius: 1rem;
+            width: 200px;
+            height: 35px;
+            color: #fff;
+            font-weight: bold;
+            background: linear-gradient(90deg, #bf2a2a 0%, #962992 36%, #7019ab 83%);
         }
     }
 }
@@ -134,10 +148,20 @@ label {
             flex-direction: column;
             label{
                 margin-bottom: 5px;
+                width: 100%;
+            }
+            input{
+                width: 100%;
+            }
+            input[type="checkbox"] {
+                width: fit-content;
             }
         }
         &-actions{
             flex-direction: column;
+            button {
+                margin-left: 0;
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
             <v-navigation 
                 :links="links"
             />
-            <div class="new_manager-content content" ref="formContainer">
+            <div class="new_manager-content content form-content" ref="formContainer">
                 <form @submit.prevent="addNewUser" class="new_form">
                     <div class="new_form-input">
                         <label>ФИО</label>
@@ -84,11 +84,11 @@ export default {
             links: [
                 {
                     title: 'Сотрудники',
-                    to: 'users'
+                    to: '/users'
                 },
                 {
                     title: 'Добавить сотрудника',
-                    to: 'new_user'
+                    to: '/new_user'
                 },
             ]
         }

@@ -35,3 +35,15 @@
     }
   }
 }
+
+@include media("phone"){
+  .navigation {
+    &__actions {
+      button {
+        width: 170px;
+        height: 35px;
+        font-size: .8rem;
+      }
+    }
+  }
+}

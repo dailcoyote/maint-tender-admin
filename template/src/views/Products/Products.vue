@@ -140,7 +140,7 @@ export default {
             links: [
                 {
                     title: 'Товары',
-                    to: 'products'
+                    to: '/products'
                 }
             ]
         }

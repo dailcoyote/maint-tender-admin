@@ -67,7 +67,7 @@ export default {
             data: [],
             filter_supplier: null,
             search_text: null,
-            links: [{title: 'Поставщики', to: 'suppliers'}]
+            links: [{title: 'Поставщики', to: '/suppliers'}]
         }
     },
     computed: {

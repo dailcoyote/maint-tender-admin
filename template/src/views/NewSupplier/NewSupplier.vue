@@ -5,7 +5,7 @@
             <v-navigation 
                 :links="links" 
             />
-            <div class="new_supplier-content content" ref="formContainer">
+            <div class="new_supplier-content content form-content" ref="formContainer">
                 <form @submit.prevent="addNewSupplier" class="new_form">
                     <div class="new_form-input">
                         <label>Поставщик (название организации)</label>
@@ -56,16 +56,16 @@ export default {
             legal_address: "",
             manager_name: "",
             manager_phone: "",
-            file_name: "Выберите файл",
+            file_name: "Файл",
             file_data: "",
             links: [
                 {
                     title: 'Поставщики',
-                    to: '/'
+                    to: '/suppliers'
                 },
                 {
                     title: 'Добавить поставщика',
-                    to: 'new'
+                    to: '/suppliers/new'
                 },
             ]
         };
@@ -84,7 +84,7 @@ export default {
             this.file_data = e.target.files.length ? e.target.files[0] : "";
         },
         deleteFile() {
-            this.file_name = "Выберите файл";
+            this.file_name = "Файл";
             this.file_data = "";
             return false;
         },
