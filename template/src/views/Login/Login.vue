@@ -46,7 +46,6 @@ export default {
                     username: this.username,
                     password: this.password
                 });
-                console.log(response);
                 const access = response.data.adminControls;
                 if(access.indexOf("NO_ACCESS") >= 0) {
                     throw "NO_ACCESS";

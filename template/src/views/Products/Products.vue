@@ -1,7 +1,10 @@
 <template>
     <div class="products-page">
         <div class="products">
-            <v-navigation name="Товары"></v-navigation>
+           <v-toolbar />
+            <v-navigation 
+                :links="links"
+            />
             <div class="products-content content">
                 <div class="products-filter">
                     <v-filter 
@@ -133,7 +136,13 @@ export default {
                 active: true,
                 usd: 0,
                 rub: 0
-            }
+            },
+            links: [
+                {
+                    title: 'Товары',
+                    to: 'products'
+                }
+            ]
         }
     },
     computed: {
