@@ -1,20 +1,12 @@
 <template>
     <div class="managers-page">
         <div class="managers">
-            <v-navigation name="Сотрудники">
-                <template #actions>
-                    <button 
-                        class="managers_add-button" 
-                        @click="addUser">
-                        <i class="material-icons">
-                            add
-                        </i>
-                        <span>
-                            Добавить сотрудника
-                        </span>
-                    </button>
-                </template>
-            </v-navigation>
+            <v-toolbar />
+            <v-navigation 
+                :links="links"
+                action="Добавить сотрудника"
+                @click="addUser"
+            />
             <div class="managers-content content">
                 <div class="managers-table">
                     <v-table 
@@ -58,7 +50,13 @@ export default {
                     value: "access_controls"
                 }
             ],
-            data: []
+            data: [],
+            links: [
+                {
+                    title: 'Сотрудники',
+                    to: 'users'
+                }
+            ]
         }
     },
     computed: {

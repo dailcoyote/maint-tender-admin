@@ -5,11 +5,13 @@ import Snackbar from "vuejs-snackbar";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import VToolbar from "./components/Toolbar/Toolbar.vue";
 import VNavigation from "./components/Navigation/Navigation.vue";
 import VFilter from "./components/Filter/Filter.vue";
 import VDialog from "./components/Dialog/Dialog";
 import VTable from "./components/Table/Table";
 
+Vue.component('v-toolbar', VToolbar);
 Vue.component('v-navigation', VNavigation);
 Vue.component('v-filter', VFilter);
 Vue.component('v-dialog', VDialog);

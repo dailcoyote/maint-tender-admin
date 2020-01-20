@@ -1,21 +1,12 @@
 <template>
     <div class="suppliers-page">
         <div class="suppliers">
+            <v-toolbar />
             <v-navigation 
-                name="Поставщики">
-                <template #actions>
-                    <button 
-                        class="suppliers_add-button" 
-                        @click="$router.push('/suppliers/new')">
-                        <i class="material-icons">
-                            add
-                        </i>
-                        <span>
-                            Добавить поставщика
-                        </span>
-                    </button>
-                </template>
-            </v-navigation>
+                :links="links"
+                action="Добавить поставщика"
+                @click="$router.push('/suppliers/new')"
+            />
             <div class="suppliers-content content">
                 <div class="suppliers-filter">
                     <v-filter 
@@ -75,7 +66,8 @@ export default {
             ],
             data: [],
             filter_supplier: null,
-            search_text: null
+            search_text: null,
+            links: [{title: 'Поставщики', to: '/suppliers'}]
         }
     },
     computed: {

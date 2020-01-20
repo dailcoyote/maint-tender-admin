@@ -2,16 +2,25 @@
     <div class="login-page">
         <div class="login">
             <div class="login-container">
+                <h1>АВТОРИЗАЦИЯ</h1>
                 <form 
                     class="login-form"
                     @submit.prevent="login">
                     <div class="login-form_item">
                         <label>Логин</label>
                         <input type="text" v-model="username">
-                    </div>
+                    </div> 
                     <div class="login-form_item">
                         <label>Пароль</label>
-                        <input type="password" v-model="password">
+                        <div>
+                            <input 
+                                :type="showPassword ? 'password' : 'text'" 
+                                v-model="password">
+                            <img 
+                                :src="showPassword ? eye_open : eye_close" 
+                                @click="showPassword = !showPassword"
+                                alt="eye">
+                        </div>
                     </div>
                     <button 
                         type="submit" 
@@ -28,6 +37,9 @@
 import "./login.scss"
 import AuthServices from "@/services/Auth"
 import httpErrorHandler from "@/handlers/httpErrorHandler";
+import eye_open from '@/assets/eye.png';
+import eye_close from '@/assets/eye2.png';
+
 export default {
     data(){
         return{
@@ -36,6 +48,9 @@ export default {
             password: process.env.VUE_APP_MODE === "development" 
                     ? process.env.VUE_APP_ADMIN_PASSWORD : "",
             isLoading: false,
+            showPassword: false,
+            eye_open,
+            eye_close
         }
     },
     methods: {
@@ -46,7 +61,6 @@ export default {
                     username: this.username,
                     password: this.password
                 });
-                console.log(response);
                 const access = response.data.adminControls;
                 if(access.indexOf("NO_ACCESS") >= 0) {
                     throw "NO_ACCESS";

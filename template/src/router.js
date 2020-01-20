@@ -70,16 +70,25 @@ const router = new Router({
                 requaresAuth: true,
                 access: "ADMIN^USERS"
             }
+        },
+        {
+            path: "/settings",
+            name: "settings",
+            component: () => import("./views/Settings/Settings.vue"),
+            meta: {
+                requaresAuth: true,
+                access: "ADMIN^USERS"
+            }
+        },
+        {
+            path: "/settings/add",
+            name: "settings_add",
+            component: () => import("./views/SettingsAdd/SettingsAdd.vue"),
+            meta: {
+                requaresAuth: true,
+                access: "ADMIN^USERS"
+            }
         }
-        // {
-        //     path: "/history",
-        //     name: "history",
-        //     component: () => import("./views/History/History.vue"),
-        //     meta: {
-        //         requaresAuth: true,
-        //         access: "ADMIN^USERS"
-        //     }
-        // },
     ]
 });
 

@@ -8,8 +8,8 @@
 .filter-item{
     max-width: 250px;
     display: flex;
-    border-radius: 5px;
-    border: 1px solid #161616;
+    border-radius: 1rem;
+    border: 1px solid #ddd;
     color: #161616;
     .search-input{
         @include flex_vertical_center();

@@ -3,6 +3,7 @@
 .table{
     margin-top: 2em;
     overflow: auto;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     &::-webkit-scrollbar{
         height: 3px;
     }
@@ -13,7 +14,7 @@
     &::-webkit-scrollbar-track{
         background-color: #dbdbdb;
     }
-    font-size: .8rem;
+    font-size: .9rem;
     max-width: 1920px;
     table{
         border-collapse:collapse;
@@ -21,11 +22,22 @@
         text-align: left;
         overflow: auto;
         table-layout: fixed;
+        thead {
+            background: rgba(0, 51, 204, 0.27);
+            th:first-child{
+                border-radius: 0 0 0 10px;
+            }
+            th:last-child{
+                border-radius: 0 0 10px 0;
+            }
+        }
         th, td{
-            border-bottom: 1px solid #7c7c7c;
             padding: 1.5em;
             text-align: center;
             line-height: 150%;
+        }
+        td {
+            border-bottom: 1px solid #7c7c7c;
         }
     }
     &_action{

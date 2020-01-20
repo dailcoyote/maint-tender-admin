@@ -1,51 +1,43 @@
 <template>
-    <div class="navigation">
-        <div class="navigation-toolbar">
-            <div class="navigation-toolbar_title">
-                <div 
-                    class="navigation-toolbar_button" 
-                    @click="sidebar = true">
-                    <i class="material-icons">
-                        sort
-                    </i>
-                </div>
-                <h1>
-                    <i 
-                        v-if="allowBack"
-                        class="material-icons"
-                        @click="$router.go(-1)">
-                        arrow_back_ios
-                    </i>
-                    {{name}}
-                </h1>
-            </div>
-            <div class="navigation-toolbar_actions">
-                <slot name="actions"></slot>
-            </div>
+  <div class="navigation">
+    <div class="navigation__links">
+        <div 
+          class="navigation__link"
+          v-for="(item, i) in links"
+          :key="i"
+        >
+          <router-link :to="item.to">
+            {{ item.title }}
+          </router-link>
+          <i 
+            v-if="links.length > 1 && links.length - 1 > i" 
+            class="material-icons">
+            arrow_forward_ios
+          </i>
         </div>
-        <transition name="open_sidebar">
-            <v-sidebar 
-                v-if="sidebar"
-                @close="sidebar = false">
-            </v-sidebar>
-        </transition>
+      </div>
+    <div 
+      v-if="action" 
+      class="navigation__actions">
+      <button @click="() => $emit('click')">
+        <span>+</span>
+        {{action}}
+      </button>
     </div>
+  </div>
 </template>
 <script>
-import "./navigation.scss"
-import VSidebar from "../Sidebar/Sidebar"
+import "./navigation.scss";
 export default {
-    props: {
-        name: String,
-        allowBack: Boolean
+  props: {
+    links: {
+      type: Array,
+      required: true
     },
-    components: {
-        VSidebar
-    },
-    data(){
-        return{
-            sidebar: false,
-        }
+    action: {
+      type: String,
+      required: false
     }
+  }
 }
 </script>

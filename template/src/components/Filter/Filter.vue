@@ -1,17 +1,5 @@
 <template>
     <div class="filter">
-        <div class="filter-item">
-            <div class="search-input">
-                <i class="material-icons">
-                    search
-                </i>
-                <input 
-                    type="text"
-                    v-model="search_text" 
-                    placeholder="Поиск"
-                    @input="search">
-            </div>
-        </div>
         <div class="filter-item" v-if="isSuppliers">
             <select v-model="supplier" @change="getSupplier">
                 <option value="">Фильтр по поставщикам</option>
@@ -45,6 +33,19 @@
                     {{item.title}}
                 </option>
             </select>
+        </div>
+        <div class="filter-item">
+            <div class="search-input">
+                <input 
+                    type="text"
+                    v-model="search_text" 
+                    placeholder="Поиск"
+                    @input="search"
+                >
+                <i class="material-icons">
+                    search
+                </i>
+            </div>
         </div>
         <div class="quantity" v-if="quantity">
             Количество: {{quantity}}

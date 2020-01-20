@@ -1,8 +1,11 @@
 <template>
     <div class="new_manager-page">
         <div class="new_manager">
-            <v-navigation :name="navigation_title" allowBack></v-navigation>
-            <div class="new_manager-content content" ref="formContainer">
+            <v-toolbar />
+            <v-navigation 
+                :links="links"
+            />
+            <div class="new_manager-content content form-content" ref="formContainer">
                 <form @submit.prevent="addNewUser" class="new_form">
                     <div class="new_form-input">
                         <label>ФИО</label>
@@ -77,7 +80,17 @@ export default {
             fullname: "",
             username: "",
             password: "",
-            access_controls: []
+            access_controls: [],
+            links: [
+                {
+                    title: 'Сотрудники',
+                    to: '/users'
+                },
+                {
+                    title: 'Добавить сотрудника',
+                    to: '/new_user'
+                },
+            ]
         }
     },
     computed: {
