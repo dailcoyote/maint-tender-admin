@@ -2,17 +2,7 @@
   <div class="suppliers-page">
     <div class="suppliers">
       <v-toolbar />
-      <v-navigation
-        :links="links"
-        action="Добавить настройки"
-        @click="$router.push('/settings/add')"
-      />
       <div class="suppliers-content content">
-        <div class="suppliers-filter">
-          <v-filter 
-            @search="search" 
-          />
-        </div>
         <div class="suppliers-table" ref="dataContainer">
           <v-table 
             :headers="headers" 
@@ -39,18 +29,17 @@ export default {
         {
           title: "%",
           value: "percent"
-        },
-        {
-          title: "Дата и время добавления",
-          value: "created_at"
         }
       ],
       data: [
         {
           name: "НДС",
           percent: "на понижение",
-          created_at: "25.12.2019  12:48"
-        }
+        },
+        {
+          name: "НДС",
+          percent: "edit",
+        },
       ],
       filter_supplier: null,
       search_text: null,

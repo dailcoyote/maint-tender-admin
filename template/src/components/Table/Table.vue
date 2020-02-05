@@ -24,6 +24,9 @@
                     <td 
                         v-for="(key, j) in headers"
                         :key="j">
+                        <span v-if="item === 'edit'">
+                            asdasd
+                        </span>
                         <span v-if="key.value == 'prices'">
                             <span v-if="item.prices.kzt">
                                 {{item.prices.kzt}} тг
