@@ -8,7 +8,6 @@
             :headers="headers" 
             :data="filteredSuppliers" 
             actions 
-            :edit="isEdit"
           />
         </div>
       </div>
@@ -34,13 +33,16 @@ export default {
       data: [
         {
           name: "НДС",
+          percent: "на понижение",
+        },
+        {
+          name: "НДС",
           percent: "edit",
         }
       ],
       filter_supplier: null,
       search_text: null,
       links: [{ title: "Настройка", to: "settings" }],
-      isEdit: true
     };
   }
 };

@@ -62,7 +62,7 @@
                         <div class="table_actions">
                             <div 
                                 class="table_action" 
-                                v-if="edit">
+                                v-if="item.percent === 'edit'">
                                 <button>
                                     Сохранить
                                 </button>
@@ -70,7 +70,7 @@
                             <div 
                                 class="table_action" 
                                 @click="editItem(item)"
-                                v-if="!history && !edit">
+                                v-if="!history && item.percent !== 'edit'">
                                 Редактировать
                             </div>
                             <div 
@@ -101,7 +101,6 @@ export default {
         actions: Boolean,
         deleted: Boolean,
         history: Boolean,
-        edit: Boolean
     },
     methods: {
         editItem(item){
