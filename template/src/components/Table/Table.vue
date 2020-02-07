@@ -44,6 +44,14 @@
                                 {{access}} <br>
                             </span>
                         </span>
+                        <span v-else-if="key.value == 'percent'">
+                             <span v-if="item.percent === 'edit'">
+                               <input type="text">
+                            </span>
+                            <span v-else>
+                                {{item.percent}}
+                            </span>
+                        </span>
                         <span v-else>
                             <span v-if="item[key.value]">
                                 {{item[key.value]}}
@@ -54,8 +62,15 @@
                         <div class="table_actions">
                             <div 
                                 class="table_action" 
+                                v-if="item.percent === 'edit'">
+                                <button>
+                                    Сохранить
+                                </button>
+                            </div>
+                            <div 
+                                class="table_action" 
                                 @click="editItem(item)"
-                                v-if="!history">
+                                v-if="!history && item.percent !== 'edit'">
                                 Редактировать
                             </div>
                             <div 
@@ -85,7 +100,7 @@ export default {
         data: Array,
         actions: Boolean,
         deleted: Boolean,
-        history: Boolean
+        history: Boolean,
     },
     methods: {
         editItem(item){
