@@ -47,6 +47,17 @@
         &:first-child{
             margin-top: 0;
         }
+        button {
+            @include input_reset;
+            cursor: pointer;
+            width: 200px;
+            height: 40px;
+            border-radius: 2rem;
+            color: #fff;
+            font-size: .9rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, rgba(191,42,42,1) 0%, rgba(150,41,146,1) 36%, rgba(112,25,171,1) 83%);
+        }
     }
 }
 

@@ -24,9 +24,6 @@
                     <td 
                         v-for="(key, j) in headers"
                         :key="j">
-                        <span v-if="item === 'edit'">
-                            asdasd
-                        </span>
                         <span v-if="key.value == 'prices'">
                             <span v-if="item.prices.kzt">
                                 {{item.prices.kzt}} тг
@@ -47,6 +44,14 @@
                                 {{access}} <br>
                             </span>
                         </span>
+                        <span v-else-if="key.value == 'percent'">
+                             <span v-if="item.percent === 'edit'">
+                               <input type="text">
+                            </span>
+                            <span v-else>
+                                {{item.percent}}
+                            </span>
+                        </span>
                         <span v-else>
                             <span v-if="item[key.value]">
                                 {{item[key.value]}}
@@ -57,8 +62,15 @@
                         <div class="table_actions">
                             <div 
                                 class="table_action" 
+                                v-if="edit">
+                                <button>
+                                    Сохранить
+                                </button>
+                            </div>
+                            <div 
+                                class="table_action" 
                                 @click="editItem(item)"
-                                v-if="!history">
+                                v-if="!history && !edit">
                                 Редактировать
                             </div>
                             <div 
@@ -88,7 +100,8 @@ export default {
         data: Array,
         actions: Boolean,
         deleted: Boolean,
-        history: Boolean
+        history: Boolean,
+        edit: Boolean
     },
     methods: {
         editItem(item){
